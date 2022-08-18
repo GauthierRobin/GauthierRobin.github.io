@@ -1,0 +1,101 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+body {
+    background-color: black;
+}
+
+#gameContainer {
+    position: relative;
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#game {
+    border-left: 1px solid darkblue;
+    border-right: 1px solid darkblue;
+}
+
+#menu {
+    position: absolute;
+    width: 100%;
+    top: 20%;
+}
+
+.show-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hide-menu {
+    display: none;
+}
+
+#difficulty-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#difficulty-menu label {
+    padding-bottom: 1rem;
+}
+
+#difficulty {
+    width: 100px;
+}
+
+option {
+    width: 30%;
+}
+
+#ui {
+    position: absolute;
+    top: 0;
+    width: 800px;
+}
+
+.show-ui {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.hide-ui {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+.color-white {
+    color: white;
+}
+
+.btn {
+    width: 10%;
+    padding: 1rem;
+    background-color: transparent;
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    margin-bottom: 2rem;
+}
+
+.btn:hover {
+    background-color: rgba(10, 0, 59, 0.524);
+}
