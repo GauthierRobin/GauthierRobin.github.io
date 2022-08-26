@@ -14,7 +14,9 @@ setTimeout(() => {
 
 setTimeout(() => {
     game.player1.sockId = id
-    socket.emit("joinGame", id)
+    console.log(game.player1.name);
+    console.log(game.player2.name);
+    socket.emit("joinGame", { id: id, name: game.player2.name })
 }, 4000)
 
 socket.on("sendRoomInfo", roomInfo => {
@@ -25,14 +27,18 @@ socket.on("sendRoomInfo", roomInfo => {
 
     game.player1.sockId = id
 
-    // sockId
+    // sockId and name
     if (id !== roomInfo.player1.id) {
         game.player2.sockId = roomInfo.player1.id
+        game.player2.name = roomInfo.player1.username
     }
 
     if (id !== roomInfo.player2.id) {
         game.player2.sockId = roomInfo.player2.id
+        game.player2.name = roomInfo.player2.username
     }
+
+    game.ui.refreshName()
 
     socket.emit("finishTurn", {
         roomId: roomInfo.roomId,

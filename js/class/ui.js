@@ -220,4 +220,8 @@ export class Ui {
         document.getElementById("loading").classList.add("hide")
         document.getElementById("background").classList.remove("hide")
     }
+
+    refreshName() {
+        document.getElementById("namePlayer1").innerText = this.game.player2.name
+    }
 }

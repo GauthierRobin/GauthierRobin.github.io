@@ -215,7 +215,7 @@ export class Player extends Ai {
         if (id == 1 && ai) {
         }
         var url = window.location.href;
-        let namePlayer = url.split('=')[1];
+        let namePlayer = decodeURI(url.split('=')[1]);
         return namePlayer;
     }
 }

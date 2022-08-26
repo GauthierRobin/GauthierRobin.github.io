@@ -67,6 +67,14 @@ const playerControl = (player, otherPlayer) => {
 playerControl(game.player1, game.player2)
 playerControl(game.player2, game.player1)
 
+document.getElementById("quitGame").addEventListener("click", () => {
+    window.location.href = window.location.origin + "/index.html"
+})
+
+document.getElementById("quit").addEventListener("click", () => {
+    window.location.href = window.location.origin + "/index.html"
+})
+
 document.getElementById("resetBtn").addEventListener("click", () => {
     const oppacity = document.getElementById('oppacity');
     const buttonRules = document.getElementById('btn-rules');

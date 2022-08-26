@@ -42,37 +42,35 @@ $("#returnToTheGame").on('click', function () {
 })
 
 const bg = document.getElementById('backg');
-const input = document.getElementById('containerHome');
+const input = document.getElementById('bgInput');
 
 const time = new Date().getHours() + 1;
 
 // const time = 8;
 if (time >= 8 && time < 13) {
     bg.setAttribute('src', 'assets/bg1.png');
-    // input.setAttribute('src', '/assets/input1.png');
+    input.setAttribute('src', 'assets/input1.png');
 }
 else if (time >= 13 && time < 18) {
     bg.setAttribute('src', 'assets/bg2.png');
-    // input.setAttribute('src', '/assets/input2.png');
+    input.setAttribute('src', 'assets/input2.png');
 }
 else {
     bg.setAttribute('src', 'assets/bg3.png');
-    // input.setAttribute('src', '/assets/input3.png');
+    input.setAttribute('src', 'assets/input3.png');
 }
 
 $('#randomName').on('click', () => {
-    const name = ["Jackson", "Bobby", "Molly", "Rascass", "Mortane", "Barbasse", "Barbe noire", "Morgane", "Shanks"];
+    const name = ["Jackson", "Bobby", "Molly", "Rascass", "Mortane", "Barbasse", "Edward", "Morgane", "Shanks"];
     document.getElementById('input').value = name[Math.round(Math.random() * 8)];
 })
 
 
+
 $('#redirectionSolo').on('click', () => {
-    // window.location.href = `${window.location.href.replace('/index.html?', '')}/soloGame.html?id=${document.getElementById('input').value}`
-    window.location.href = `${window.location.href.replace('index.html', '')}soloGame.html?id=player`
+    window.location.href = window.location.origin + `/soloGame.html?id=${document.getElementById('input').value}`
 })
 $('#redirectionMulti').on('click', () => {
-    // window.location.href = `${window.location.href.replace('/index.html?', '')}/multiGame.html?id=${document.getElementById('input').value}`
-    window.location.href = `${window.location.href.replace('index.html', '')}multiGame.html?id=player`
+    window.location.href = window.location.origin + `/multiGame.html?id=${document.getElementById('input').value}`
 })
-
 

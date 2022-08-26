@@ -15,10 +15,10 @@ export class Animate {
                 balise.innerHTML = (`<img class='explode' src=assets/animationsEffect/explosion.png\ alt="" />`);
                 console.log(balise);
                 this.stop = true;
-            }, 0);
+            }, 300);
             setTimeout(() => {
                 this.resetAnime(this.player1, this.player2)
-            }, 1100);
+            }, 1300);
         }
     }
 
