@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<link rel="icon" href="assets/logo.png"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="style/style.css"/>
+		<script defer src="js/homePage.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<title>The Pirate's Dice</title>
+	</head>
+	<body>
+		<div id="wrapper2">
+			<div id="background">
+				<div id="rules">
+					<div id="oppacity"></div>
+					<img id="rulesImg" src="assets/rules.png" alt=""/>
+				</div>
+				<button id="btn-rules">
+					<img src="assets/rulesBtn.png" alt=""/>
+				</button>
+				<button id="returnToTheGame"><img src="assets/returnToTheGame.png" alt=""/></button>
+				<audio id="SeaSound" src="assets/soundsEffect/SeaSound.mp3" autoplay="true"></audio>
+				<audio id="closeRulesBook" src="assets/soundsEffect/closeRulesBook.mp3"></audio>
+				<audio id="rulesBookSound" src="assets/soundsEffect/rulesBookSound.mp3"></audio>
+
+				<img id="backg" class="backg" src="" alt="">
+            <img id="logo" src="assets/logo.png" alt="">
+
+            <button id="randomName"><img src="assets/randomName.png" alt=""/></button>
+            <input 
+                id="input" 
+                type="text" 
+                placeholder="Entrer votre pseudo" 
+                pattern="[A-Za-z]{1,10}" 
+                required />
+
+              <img id="bgInput" src="" alt="">
+
+                <button id="redirectionSolo">
+                    <img src="assets/solo.png" alt=""  >
+                </button>
+                <button id="redirectionMulti">
+                    <img src="assets/multi.png" alt="" >
+                </button>
+				</button>
+			</div>
+		</div>
+	</body>
+</html>
