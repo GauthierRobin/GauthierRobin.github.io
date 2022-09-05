@@ -1,44 +1,12 @@
-import { Ai } from "/js/class/ai.js";
-
-export class Player extends Ai {
-    constructor(game, htmlTab, id, turn, ai = false) {
-        super()
+export class Player {
+    constructor(game, htmlTab, id) {
         this.game = game
         this.otherPlayer = null
         this.htmlTab = htmlTab
-        this.score = 0;
-        this.scoreColumn1 = 0;
-        this.scoreColumn2 = 0;
-        this.scoreColumn3 = 0;
         this.id = id
-        this.name = this.generateName(this.id, this.ai);
-        this.ai = ai
+        this.name
         this.nbCol = 3
         this.nbColCase = 3
-        this.grid = [null, null, null, null, null, null, null, null, null]
-        this.de = null
-        this.isLaunchDe = false
-        this.turn = turn
-        this.win = false
-        this.roomId
-    }
-
-    reset() {
-        this.grid = [null, null, null, null, null, null, null, null, null]
-        this.turn = false
-        this.score = 0
-        this.de = null
-        this.isLaunchDe = false
-        this.scoreColumn1 = 0
-        this.scoreColumn2 = 0
-        this.scoreColumn3 = 0
-    }
-
-    finishTurn() {
-        this.isLaunchDe = false
-        this.de = null
-        this.game.switchTurn()
-        this.game.ui.choiceDice(this)
     }
 
     drawGrille() {
@@ -64,75 +32,86 @@ export class Player extends Ai {
 
     setCaseHtml(id) {
         return `<div id=${id} class="case">
-                        </div>`
+                    <img src="#" alt="" data-value="null">
+                </div>`
     }
 
-    launchDe() {
-        this.de = Math.round(Math.random() * 5) + 1
-        this.isLaunchDe = true
+    refreshColumn(columnId) {
+        this.sortColumn(columnId).forEach((dice, nbCase) => {
+            let imgSrc = "#"
+            let dataSet = "null"
+
+            if (dice !== "null") {
+                imgSrc = `assets/dices/Dice${dice}.png`
+                dataSet = dice
+            }
+
+            const imgCase = $(`#player${this.id}-col${columnId}-case-${nbCase + 1} img`)
+
+            imgCase.attr("data-value", dataSet)
+            imgCase.attr("src", imgSrc)
+        })
     }
 
-    getFormatGrid() {
-        let formatGrid = []
-        let cmpt = 0
-        for (let index = 0; index < this.nbCol; index++) {
-            formatGrid.push(this.grid.slice(
-                cmpt,
-                cmpt + this.nbCol
-            ))
-            cmpt += this.nbCol
+    sortColumn(columnId) {
+        let columnValue = this.getFormatColumn(columnId)
+        columnValue = columnValue.filter(caseValue => caseValue !== "null")
+        const nbOfNullCase = 3 - columnValue.length
+
+        for (let index = 0; index < nbOfNullCase; index++) {
+            columnValue.push("null")
         }
-        return formatGrid
+
+        return columnValue
     }
 
-    setSortedGrid() {
-        let newGrid = []
-        this.getFormatGrid().forEach(col => {
-            let nbNullBox = 0
+    refreshTotalScore() {
+        let totalScore = 0
 
-            col.forEach(box => {
-                if (typeof box === "number") {
-                    newGrid.push(box)
-                } else {
-                    nbNullBox++
-                }
+        for (let columnId = 1; columnId <= 3; columnId++) {
+            totalScore += this.evalScoreColumn(columnId)
+        }
+
+        $(`#totalScore${this.id}`).html(totalScore)
+    }
+
+    refreshScoreColumn(columnId) {
+        const scoreColumn = this.evalScoreColumn(columnId)
+
+        if (scoreColumn > 0) {
+            $(`#totalScore${this.id}Column${columnId}`).html(scoreColumn)
+        } else {
+            $(`#totalScore${this.id}Column${columnId}`).html("")
+        }
+    }
+
+    evalScoreColumn(columnId) {
+        const countDices = this.getFormatColumn(columnId).reduce((acc, value) => ({
+            ...acc,
+            [value]: (acc[value] || 0) + 1
+        }), {})
+
+        let totalScoreOfColumn = 0
+
+        for (let dice in countDices) {
+            if (dice !== "null") {
+                const nbOfDice = countDices[dice]
+                totalScoreOfColumn += parseInt(dice) * nbOfDice * nbOfDice
+            }
+        }
+
+        return totalScoreOfColumn
+    }
+
+    getFormatColumn(columnId) {
+        let formatColumn = []
+
+        document.querySelectorAll(`div[id^="player${this.id}-col${columnId}-case"] img`)
+            .forEach((caseImg) => {
+                formatColumn.push(caseImg.dataset.value)
             })
 
-            for (let nullBox = 0; nullBox < nbNullBox; nullBox++) {
-                newGrid.push(null)
-            }
-        });
-        this.grid = newGrid
-    }
-
-    gridIsFull() {
-        return !this.grid.includes(null)
-    }
-
-    columnIsFull(nbCol) {
-        return !this.getFormatGrid()[nbCol].includes(null)
-    }
-
-    checkColumn(numCase) {
-        if ((this.grid[numCase] == null) && (this.grid[numCase + 1] == null) && (this.grid[numCase + 2] == null)) {
-            this.grid[numCase] = this.de;
-            this.de = null;
-        }
-
-        if ((this.grid[numCase] != null) && (this.grid[numCase + 1] == null) && (this.grid[numCase + 2] == null)) {
-            this.grid[numCase + 1] = this.de;
-            this.de = null;
-        }
-
-        if ((this.grid[numCase] != null) && (this.grid[numCase + 1] != null) && (this.grid[numCase + 2] == null)) {
-            this.grid[numCase + 2] = this.de;
-            this.de = null;
-        }
-        switch (numCase) {
-            case 1: this.scoreColumn1 = this.evalGrid(0, 1); break;
-            case 2: this.scoreColumn2 = this.evalGrid(3, 2); break;
-            case 3: this.scoreColumn3 = this.evalGrid(6, 3); break;
-        }
+        return formatColumn
     }
 
     checkVibrateClass(id, col) {
@@ -148,38 +127,6 @@ export class Player extends Ai {
         }
     }
 
-    evalGrid(beginCase) {
-        let scoreColumn = 0;
-        if (this.grid[beginCase] == this.grid[beginCase + 1] && this.grid[beginCase] == this.grid[beginCase + 2] && this.grid[beginCase] != null) {
-            scoreColumn = this.grid[beginCase] * 9;
-        }
-        if (this.grid[beginCase] == this.grid[beginCase + 1] && this.grid[0] != this.grid[beginCase + 2]) {
-            scoreColumn = this.grid[beginCase] * 4 + this.grid[beginCase + 2];
-        }
-        if (this.grid[beginCase] == this.grid[beginCase + 2] && this.grid[beginCase] != this.grid[beginCase + 1]) {
-            scoreColumn = this.grid[beginCase] * 4 + this.grid[beginCase + 1];
-        }
-        if (this.grid[beginCase + 1] == this.grid[beginCase + 2] && this.grid[beginCase + 1] != this.grid[beginCase]) {
-            scoreColumn = this.grid[beginCase + 1] * 4 + this.grid[beginCase];
-        }
-        if (this.grid[beginCase] != this.grid[beginCase + 1] && this.grid[beginCase] != this.grid[beginCase + 2] && this.grid[beginCase + 1] != this.grid[beginCase + 2]) {
-            scoreColumn = this.grid[beginCase] + this.grid[beginCase + 1] + this.grid[beginCase + 2];
-        }
-        return scoreColumn;
-    }
-
-    generateName(id, ai) {
-        const name = ["Jackson", "Bobby", "Molly", "Rascass", "Mortane", "Barbasse", "Edward", "Morgane", "Shanks"];
-        if (id == 2 && !ai) {
-            return name[Math.round(Math.random() * 10)];
-        }
-        if (id == 1 && ai) {
-        }
-        var url = window.location.href;
-        let namePlayer = decodeURI(url.split('=')[1]);
-        return namePlayer;
-    }
-
     initControl() {
         this.controlChoiceDice()
         this.controlColumn()
@@ -187,49 +134,25 @@ export class Player extends Ai {
 
     controlChoiceDice() {
         document.getElementById(`potPlayer${this.id}`).addEventListener("click", () => {
-            if (this.turn && this.game.run && !this.isLaunchDe && !this.ai) {
-                this.launchDe();
-                document.getElementById(`potPlayer${this.id}`).src = `assets/dices/Dice${this.de}.png`
+            if (true) {
+                this.game.client.getMyDice()
             }
         })
     }
 
     controlColumn() {
-        let columnId = [0, 3, 6]
-        for (let index = 0; index < this.nbCol; index++) {
-            document.getElementById(`player${this.id}-col${index + 1}`).addEventListener("click", () => {
-                if (this.turn && this.game.run && this.de !== null && this.isLaunchDe && !this.columnIsFull(index) && !this.ai) {
-                    setTimeout(() => {
-                        this.game.sound.play('diceSound', 0.1)
-
-                        this.checkColumn(columnId[index])
-                        this.otherPlayer.checkColumn(columnId[index])
-
-                        this.setSortedGrid()
-                        this.otherPlayer.setSortedGrid();
-
-                        this.game.destroyEnemieDices(this, this.otherPlayer)
-
-                        this.game.ui.refreshColumnAndScore(this, index)
-                        this.game.ui.refreshColumnAndScore(this.otherPlayer, index)
-
-                        if (this.game.multi) {
-                            this.game.client.sendUpdateGrids()
-                            this.game.client.sendGetGrids()
-                        }
-
-                        this.finishTurn()
-
-                        if (this.game.multi) {
-                            this.game.client.sendFinishTurn()
-                        }
-
-                        if (this.game.multi && this.gridIsFull()) {
-                            this.game.client.sendEndGame()
-                        }
-                    }, 200)
-                }
+        for (let columnId = 0; columnId < this.nbCol; columnId++) {
+            document.getElementById(`player${this.id}-col${columnId + 1}`).addEventListener("click", () => {
+                this.game.client.sendColumnChoice(columnId)
             })
+        }
+    }
+
+    setName() {
+        const pseudo = localStorage.getItem("pseudo")
+        if (pseudo !== null) {
+            this.name = pseudo
+            $(`#namePlayer${this.id}`).html(pseudo)
         }
     }
 }

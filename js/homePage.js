@@ -1,3 +1,14 @@
+import { Login } from "./class/login.js"
+import { Leaderboard } from "./class/leaderBoard.js"
+
+const login = new Login()
+login.autoConnect()
+login.signup()
+login.signin()
+
+const leaderBoard = new Leaderboard()
+leaderBoard.init()
+
 function checkClass() {
     let Class = document.getElementById(`player${id}-col${col}-case-${cell}`).getAttribute('class');
     if (Class === 'vibrate') {
@@ -65,12 +76,24 @@ $('#randomName').on('click', () => {
     document.getElementById('input').value = name[Math.round(Math.random() * 8)];
 })
 
-
-
 $('#redirectionSolo').on('click', () => {
-    window.location.href = window.location.origin + `/soloGame.html?id=${document.getElementById('input').value}`
-})
-$('#redirectionMulti').on('click', () => {
-    window.location.href = window.location.origin + `/multiGame.html?id=${document.getElementById('input').value}`
+    const pseudo = localStorage.getItem("pseudo")
+    const password = localStorage.getItem("password")
+    if (pseudo !== null && password !== null) {
+        window.location.href = window.location.origin + `/soloGame.html?id=${document.getElementById('input').value}`
+    } else {
+        // show conect form
+        console.log("Veillez vous connecter");
+    }
 })
 
+$('#redirectionMulti').on('click', () => {
+    const pseudo = localStorage.getItem("pseudo")
+    const password = localStorage.getItem("password")
+    if (pseudo !== null && password !== null) {
+        window.location.href = window.location.origin + `/multiGame.html?id=${document.getElementById('input').value}`
+    } else {
+        // show conect form
+        console.log("Veillez vous connecter");
+    }
+})

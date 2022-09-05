@@ -10,28 +10,42 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		<script defer type="module" src="js/main.js"></script>
 		<script defer src="js/responsive.js"></script>
+		<script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
 	</head>
 	<body>
+		<div id="sound">
+			<audio id="beginSong" src="assets/soundsEffect/begin.mp3"></audio>
+			<audio id="boom" src="assets/soundsEffect/boom.mp3"></audio>
+			<audio id="SeaSound" src="assets/soundsEffect/SeaSound.mp3" autoplay="true"></audio>
+			<audio id="bgAudio" src="assets/soundsEffect/bgSound.mp3" autoplay="true"></audio>
+			<audio id="dropCoin" src="assets/soundsEffect/dropCoin.mp3"></audio>
+			<audio id="closeRulesBook" src="assets/soundsEffect/closeRulesBook.mp3"></audio>
+			<audio id="rulesBookSound" src="assets/soundsEffect/rulesBookSound.mp3"></audio>
+			<audio id="diceSound" src="assets/soundsEffect/diceDrop.mp3"></audio>
+			<audio id="aiSoundDice" src="assets/soundsEffect/diceDrop.mp3"></audio>
+		</div>
+
 		<div id="wrapper">
+
 			<div id="background">
+				<div id="loading">
+					<img src="assets/loading.png">
+					<div id="load-info">
+						<img id="gouvernail" src="assets/load.png" alt="gouvernail">
+						<p id="load">Loading..</p>
+					</div>
+				</div>
+
+
 				<div id="rules">
 					<div id="oppacity"></div>
 					<img id="rulesImg" src="assets/rules.png" alt=""/>
 				</div>
-				<button id="btn-rules"><img src="assets/rulesBtn.png" alt=""/></button>
-				<button id="lore"><img src="assets/pieces.png" alt=""></button>
+
+				<button id="btn-rules"><img src="assets/rulesBtn.png" alt="" disabled="false"/></button>
+				<button id="lore" class="hide"><img src="assets/pieces.png" alt=""></button>
 				<button id="quitGame"><img src="assets/quitBtn.png" alt=""></button>
 				<button id="returnToTheGame"><img src="assets/returnToTheGame.png" alt=""/></button>
-
-				<audio id="beginSong" src="assets/soundsEffect/begin.mp3"></audio>
-				<audio id="bomb" src="assets/soundsEffect/bomb.mp3"></audio>
-				<audio id="SeaSound" src="assets/soundsEffect/SeaSound.mp3" autoplay="true"></audio>
-				<audio id="bgAudio" src="assets/soundsEffect/bgSound.mp3" autoplay="true"></audio>
-				<audio id="dropCoin" src="assets/soundsEffect/dropCoin.mp3"></audio>
-				<audio id="closeRulesBook" src="assets/soundsEffect/closeRulesBook.mp3"></audio>
-				<audio id="rulesBookSound" src="assets/soundsEffect/rulesBookSound.mp3"></audio>
-				<audio id="diceSound" src="assets/soundsEffect/diceDrop.mp3"></audio>
-				<audio id="aiSoundDice" src="assets/soundsEffect/diceDrop.mp3"></audio>
 
 				<p id="namePlayer2"></p>
 				<p id="namePlayer1"></p>
@@ -44,7 +58,7 @@
 					<div id="ui-bas">
 						<div id="roll-bas">
 							<img id="score2" src="assets/caseScore.png" alt="">
-							<div id="totalScore2" class="totalScore2"></div>
+							<div id="totalScore2" class="totalScore2">0</div>
 
 							<img src="assets/rollbas.png">
 							<img id="potPlayer2" class="choice-dice" src="assets/dices/choseDice.png" alt="">
@@ -54,7 +68,7 @@
 					<div id="ui-haut">
 						<div id="roll-haut">
 							<img id="score1" src="assets/caseScore.png" alt="">
-							<div id="totalScore1" class="totalScore1"></div>
+							<div id="totalScore1" class="totalScore1">0</div>
 
 							<img src="assets/rollhaut.png">
 							<img id="potPlayer1" class="choice-dice" src="assets/dices/choseDice.png" alt="">
@@ -74,9 +88,8 @@
 					<p id="scoreMenu" class="score-txt"></p>
 				</div>
 
-				<div class="reset">
-					<img id="resetBtn" src="assets/resetBtn.png">
-					<img id="quitBtn" src="assets/quitBtn.png" alt="">
+				<div class="quit">
+					<img id="quitBtn" src="assets/quitBtn.png">
 				</div>
 			</div>
 		</div>

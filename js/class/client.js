@@ -16,169 +16,120 @@ export class Client {
         }
         this.socket = io(serveUrl)
 
-        this.socket.emit(
-            "joinGame",
-            this.game.player2.name
-        )
+        if (this.game.multi) {
+            this.socket.emit("joinMultiGame", this.game.player1.name)
+        }
+        else {
+            this.socket.emit("joinSoloGame", this.game.player1.name)
+        }
 
         this.receiveRoomInfo()
-        this.receiveGrids()
-        this.receiveGameTurn()
-        this.receivePlayerFinish()
-        this.receivePlayerQuit()
+        this.receiveMyDice()
+        this.receivePlayer2Dice()
+        this.receiveMyGrid()
+        this.receivePlayer2Grid()
+        this.receiveDestroyMyDice()
+        this.receiveDestroyEnemyDice()
+        this.receiveEndGame()
+        this.receivePlayerExit()
+    }
+
+    getMyDice() {
+        this.socket.emit("getMyDice")
+    }
+
+    receiveMyDice() {
+        this.socket.on("yourDice", (dice) => {
+            $("#potPlayer2").attr("src", `assets/dices/Dice${dice}.png`)
+        })
+    }
+
+    receivePlayer2Dice() {
+        this.socket.on("player2Dice", (dice) => {
+            $("#potPlayer1").attr("src", `assets/dices/Dice${dice}.png`)
+        })
+    }
+
+    sendColumnChoice(columnId) {
+        this.socket.emit("playerColumnChoice", columnId)
+    }
+
+    receivePlayer2Grid() {
+        this.socket.on("player2Grid", (p2GridInfos) => {
+            this.game.sound.play('diceSound', 0.1)
+            $(`#potPlayer${this.game.player2.id}`).attr("src", "assets/dices/choseDice.png")
+            const diceCaseImg = $(`#player1-col${p2GridInfos.columnId}-case-${p2GridInfos.nbCase} img`)
+
+            diceCaseImg.attr("data-value", p2GridInfos.caseValue)
+            diceCaseImg.attr("src", `assets/dices/Dice${p2GridInfos.caseValue}.png`)
+
+            this.game.player2.refreshScoreColumn(p2GridInfos.columnId)
+            this.game.player2.refreshTotalScore()
+        })
+    }
+
+    receiveMyGrid() {
+        this.socket.on("playerGrid", (p1GridInfos) => {
+            this.game.sound.play('diceSound', 0.1)
+            $(`#potPlayer${this.game.player1.id}`).attr("src", "assets/dices/choseDice.png")
+            const diceCaseImg = $(`#player2-col${p1GridInfos.columnId}-case-${p1GridInfos.nbCase} img`)
+
+            diceCaseImg.attr("data-value", p1GridInfos.caseValue)
+            diceCaseImg.attr("src", `assets/dices/Dice${p1GridInfos.caseValue}.png`)
+
+            this.game.player1.refreshScoreColumn(p1GridInfos.columnId)
+            this.game.player1.refreshTotalScore()
+        })
+    }
+
+    receiveDestroyMyDice() {
+        this.socket.on("destroyMyDice", (diceInfos) => {
+            const animationDuration = this.game.animation.explodeDice("2", diceInfos.columnId, diceInfos.nbCase)
+
+            setTimeout(() => {
+                this.game.player1.refreshScoreColumn(diceInfos.columnId)
+                this.game.player1.refreshColumn(diceInfos.columnId)
+                this.game.player1.refreshTotalScore()
+            }, animationDuration + 600)
+        })
+    }
+
+    receiveDestroyEnemyDice() {
+        this.socket.on("destroyEnemyDice", (diceInfos) => {
+            const animationDuration = this.game.animation.explodeDice("1", diceInfos.columnId, diceInfos.nbCase)
+
+            setTimeout(() => {
+                this.game.player2.refreshScoreColumn(diceInfos.columnId)
+                this.game.player2.refreshColumn(diceInfos.columnId)
+                this.game.player2.refreshTotalScore()
+            }, animationDuration + 600)
+        })
+    }
+
+    receiveEndGame() {
+        this.socket.on("endGame", (endGameMsg) => {
+            this.game.ui.endGame(endGameMsg)
+            console.log(endGameMsg)
+        })
     }
 
     receiveRoomInfo() {
         this.socket.on("sendRoomInfo", roomInfo => {
-            this.setRoomId(roomInfo.roomId)
-            this.setSockIdAndName(
-                roomInfo.player1.id,
-                roomInfo.player2.id,
-                roomInfo.player1.username,
-                roomInfo.player2.username
-            )
-            this.game.ui.refreshName()
-            this.sendFinishTurn()
+            this.game.roomId = roomInfo.roomId
+            this.game.player2.name = roomInfo.p2Name
+            $("#namePlayer1").text(roomInfo.p2Name)
             this.game.ui.load()
-            this.game.run = true
             console.log(roomInfo)
         })
     }
 
-    setRoomId(roomId) {
-        this.game.player1.roomId = roomId
-        this.game.player2.roomId = roomId
-    }
-
-    setSockIdAndName(idP1, idP2, nameP1, nameP2) {
-        this.game.player1.sockId = this.socket.id
-
-        if (this.socket.id !== idP1) {
-            this.game.player2.sockId = idP1
-            this.game.player2.name = nameP1
-        }
-
-        if (this.socket.id !== idP2) {
-            this.game.player2.sockId = idP2
-            this.game.player2.name = nameP2
-        }
-    }
-
-    receiveGameTurn() {
-        this.socket.on("gameTurn", infos => {
-            if (infos.player1.id === this.game.player1.sockId) {
-                this.game.player1.turn = infos.player1.turn
-            }
-            if (infos.player2.id === this.game.player1.sockId) {
-                this.game.player1.turn = infos.player1.turn
-            }
-
-            if (infos.player1.id === this.game.player2.sockId) {
-                this.game.player2.turn = infos.player2.turn
-            }
-            if (infos.player2.id === this.game.player2.sockId) {
-                this.game.player2.turn = infos.player2.turn
-            }
+    receivePlayerExit() {
+        this.socket.on("playerExit", () => {
+            this.game.ui.endGame(`${this.game.player2.name} rage quit`)
         })
     }
 
-    receiveGrids() {
-        this.socket.on("sendGrids", infos => {
-            this.setGrids(
-                infos.player1.id,
-                infos.player2.id,
-                infos.player1.grid,
-                infos.player2.grid
-            )
-
-            for (let index = 0; index < 3; index++) {
-                this.game.ui.refreshColumnAndScore(this.game.player1, index)
-                this.game.ui.refreshColumnAndScore(this.game.player2, index)
-            }
-
-            this.game.sound.play('diceSound', 0.1)
-        })
-    }
-
-    setGrids(p1Id, p2Id, p1Grid, p2Grid) {
-        if (p1Id === this.game.player1.sockId) {
-            this.game.player1.grid = p1Grid
-        }
-
-        if (p2Id === this.game.player1.sockId) {
-            this.game.player1.grid = p1Grid
-        }
-
-        if (p1Id === this.game.player2.sockId) {
-            this.game.player2.grid = p2Grid
-        }
-
-        if (p2Id === this.game.player2.sockId) {
-            this.game.player2.grid = p2Grid
-        }
-    }
-
-    receivePlayerFinish() {
-        this.socket.on("playerFinish", () => {
-            this.game.switchTurn()
-        })
-    }
-
-    receivePlayerQuit() {
-        this.socket.on("player2Quit", () => {
-            this.game.run = false
-            this.game.ui.endGame()
-        })
-    }
-
-    sendEndGame() {
-        this.socket.emit("endGame", {
-            roomId: this.game.player1.roomId,
-            id: this.game.player1.sockId
-        })
-    }
-
-    sendUpdateGrids() {
-        this.socket.emit("updateGrids", {
-            roomId: this.game.player1.roomId,
-            player1: {
-                id: this.game.player1.sockId,
-                grid: this.game.player1.grid
-            },
-            player2: {
-                id: this.game.player2.sockId,
-                grid: this.game.player2.grid
-            }
-        })
-    }
-
-    sendGetGrids() {
-        this.socket.emit("getGrids", {
-            roomId: this.game.player1.roomId,
-            player1: {
-                id: this.game.player1.sockId
-            },
-            player2: {
-                id: this.game.player2.sockId
-            }
-        })
-    }
-
-    sendFinishTurn() {
-        this.socket.emit("finishTurn", {
-            roomId: this.game.player1.roomId,
-            player1: {
-                id: this.game.player1.sockId,
-                turn: this.game.player1.turn
-            },
-            player2: {
-                id: this.game.player2.sockId,
-                turn: this.game.player2.turn
-            }
-        })
-    }
-
-    sendPlayerQuit() {
-        this.socket.emit("playerQuit", this.game.player1.sockId)
+    sendExitGameOfType(typeOfEvent) {
+        this.socket.emit(typeOfEvent)
     }
 }
