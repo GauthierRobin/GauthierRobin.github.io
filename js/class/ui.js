@@ -7,15 +7,104 @@ export class Ui {
         this.buttonRules = document.getElementById('btn-rules');
     }
 
-    endGame() {
+    init() {
+        this.quitBtn()
+        this.quitGameBtn()
+        this.rulesBtn()
+        this.returnToGameBtn()
+        this.loreBtn()
+    }
+
+    quitBtn() {
+        document.getElementById("quitGame").addEventListener("click", () => {
+            this.game.client.sendExitGameOfType("rageQuit")
+            this.resetGame()
+        })
+    }
+
+    quitGameBtn() {
+        document.getElementById("quitBtn").addEventListener("click", () => {
+            this.game.client.sendExitGameOfType("exitGame")
+            this.resetGame()
+        })
+    }
+
+    resetGame() {
+        this.resetGrid()
+        this.resetScore()
+        this.resetEndMenu()
+        this.returnToMenu()
+    }
+
+    returnToMenu() {
+        $("#index").fadeIn(400)
+        $("#game").fadeOut(400)
+    }
+
+    resetEndMenu() {
+        this.endMenu.classList.add("hide-important")
+        this.endScore.innerHTML = ""
+        this.buttonRules.removeAttribute('disabled')
+    }
+
+    rulesBtn() {
+        document.getElementById("btn-rules").addEventListener('click', () => {
+            this.game.sound.play('rulesBookSound', 0.1)
+            const oppacity = document.getElementById('oppacity');
+            const image = document.getElementById('rulesImg');
+            const imageBack = document.getElementById('returnToTheGame');
+            oppacity.style.display = (oppacity.style.display == "none") ? "block" : "none";
+            image.style.display = (image.style.display == "none") ? "block" : "none";
+            imageBack.style.display = (imageBack.style.display == "none") ? "block" : "none";
+            image.style.animation = 'fadeIn 3s';
+            imageBack.style.animation = 'fadeIn 3s';
+        })
+    }
+
+    returnToGameBtn() {
+        document.getElementById("returnToTheGame").addEventListener('click', () => {
+            this.game.sound.play('closeRulesBook', 0.1)
+            const oppacity = document.getElementById('oppacity');
+            const image = document.getElementById('rulesImg');
+            const imageBack = document.getElementById('returnToTheGame');
+            oppacity.style.display = (oppacity.style.display == "block") ? "none" : "block";
+            image.style.display = (image.style.display == "block") ? "none" : "block";
+            imageBack.style.display = (imageBack.style.display == "block") ? "none" : "block";
+        })
+    }
+
+    loreBtn() {
+        document.getElementById('lore').addEventListener('click', () => {
+            this.game.sound.play('dropCoin', 0.1)
+        })
+    }
+
+    endGame(endGameMsg) {
+        this.displayEndGame(endGameMsg);
         this.oppacity.style.display = "block";
-        this.endScore.innerText = `${document.getElementById(`totalScore1`).innerText} - ${document.getElementById(`totalScore2`).innerText}`
         this.buttonRules.setAttribute('disabled', 'true');
-        this.endMenu.classList.remove("hide")
+        this.endMenu.classList.remove("hide-important");
+    }
+
+    displayEndGame(endGameMsg) {
+        let scorePlayer = document.getElementById(`totalScore2`).innerText;
+        let scoreOtherPlayer = document.getElementById(`totalScore1`).innerText;
+
+        if (scoreOtherPlayer < scorePlayer) {
+            this.endScore.innerText = `${endGameMsg}\n${scorePlayer} - ${scoreOtherPlayer}`
+            document.getElementById('parchemin').style.filter = 'drop-shadow(0 0 5rem rgb(255, 179, 0))';
+        }
+        if (scoreOtherPlayer > scorePlayer) {
+            this.endScore.innerText = `${endGameMsg}\n${scoreOtherPlayer} - ${scorePlayer}`
+            document.getElementById('parchemin').style.filter = 'drop-shadow(0 0 5rem rgb(255, 0, 0))';
+        }
+        if (scoreOtherPlayer == scorePlayer) {
+            this.endScore.innerText = `${endGameMsg}\n${scorePlayer} - ${scoreOtherPlayer}`
+            document.getElementById('parchemin').style.filter = 'drop-shadow(0 0 5rem #fff)';
+        }
     }
 
     restartGame() {
-
         let img = document.createElement('img');
         img.setAttribute('id', 'begin');
         img.src = 'assets/animationsEffect/begin.png';
@@ -23,9 +112,7 @@ export class Ui {
         setInterval(() => {
             img.src = '';
         }, 1000);
-        const beginSong = document.getElementById('beginSong');
-        beginSong.volume = 0.09;
-        beginSong.play();
+        this.game.sound.play('beginSong', 0.09)
         document.getElementById('background').append(img);
         this.buttonRules.removeAttribute('disabled');
         this.oppacity.style.display = "none";
@@ -40,14 +127,12 @@ export class Ui {
         this.resetScore()
     }
 
-
-
-
     resetGrid() {
         let cases = document.getElementsByClassName("case")
 
         for (let index = 0; index < cases.length; index++) {
-            cases[index].innerHTML = ""
+            cases[index].firstChild.src = "#"
+            cases[index].firstChild.dataset.value = "null"
         }
     }
 
@@ -67,161 +152,5 @@ export class Ui {
             columnScore1[index].innerHTML = ""
             columnScore2[index].innerHTML = ""
         }
-    }
-
-    refreshColumn(player, nbColumn) {
-        player.getFormatGrid()[nbColumn].forEach((caseValue, caseId) => {
-            if (caseValue != null) {
-                document.getElementById(
-                    `player${player.id}-col${nbColumn + 1}-case-${caseId + 1}`
-                ).innerHTML = `<img src="assets/dices/Dice${caseValue}.png" alt=""/>`
-            }
-            else {
-                document.getElementById(`player${player.id}-col${nbColumn + 1}-case-${caseId + 1}`).innerHTML = ""
-            }
-        })
-    }
-
-    refreshColumnScore(player, nbColumn) {
-        let columnScore = 0
-
-        switch (nbColumn) {
-            case 0:
-                if (player.grid[0] == player.grid[1] && player.grid[0] == player.grid[2] && player.grid[0] != null) {
-                    columnScore = player.grid[0] * 9;
-                }
-                if (player.grid[0] == player.grid[1] && player.grid[0] != player.grid[2]) {
-                    columnScore = player.grid[0] * 4 + player.grid[2];
-                }
-                if (player.grid[0] == player.grid[2] && player.grid[0] != player.grid[1]) {
-                    columnScore = player.grid[0] * 4 + player.grid[1];
-                }
-                if (player.grid[1] == player.grid[2] && player.grid[1] != player.grid[0]) {
-                    columnScore = player.grid[1] * 4 + player.grid[0];
-                }
-                if (player.grid[0] != player.grid[1] && player.grid[0] != player.grid[2] && player.grid[1] != player.grid[2]) {
-                    columnScore = player.grid[0] + player.grid[1] + player.grid[2];
-                }
-                break;
-
-            case 1:
-                if (player.grid[3] == player.grid[4] && player.grid[3] == player.grid[5] && player.grid[3] != null) {
-                    columnScore = player.grid[3] * 9;
-                }
-                if (player.grid[3] == player.grid[4] && player.grid[3] != player.grid[5]) {
-                    columnScore = player.grid[3] * 4 + player.grid[2];
-                }
-                if (player.grid[3] == player.grid[5] && player.grid[3] != player.grid[4]) {
-                    columnScore = player.grid[3] * 4 + player.grid[1];
-                }
-                if (player.grid[4] == player.grid[5] && player.grid[4] != player.grid[3]) {
-                    columnScore = player.grid[4] * 4 + player.grid[3];
-                }
-                if (player.grid[3] != player.grid[4] && player.grid[3] != player.grid[5] && player.grid[4] != player.grid[5]) {
-                    columnScore = player.grid[3] + player.grid[4] + player.grid[5];
-                }
-                break;
-
-            case 2:
-                if (player.grid[6] == player.grid[7] && player.grid[6] == player.grid[8] && player.grid[6] != null) {
-                    columnScore = player.grid[6] * 9;
-                }
-                if (player.grid[6] == player.grid[7] && player.grid[6] != player.grid[8]) {
-                    columnScore = player.grid[6] * 4 + player.grid[8];
-                }
-                if (player.grid[6] == player.grid[8] && player.grid[6] != player.grid[7]) {
-                    columnScore = player.grid[6] * 4 + player.grid[7];
-                }
-                if (player.grid[7] == player.grid[8] && player.grid[7] != player.grid[6]) {
-                    columnScore = player.grid[7] * 4 + player.grid[6];
-                }
-                if (player.grid[6] != player.grid[7] && player.grid[6] != player.grid[8] && player.grid[7] != player.grid[8]) {
-                    columnScore = player.grid[6] + player.grid[7] + player.grid[8];
-                }
-                break;
-
-            default:
-                break;
-        }
-
-        if (columnScore >= 0) {
-            document.getElementById(`totalScore${player.id}Column${nbColumn + 1}`).innerText = columnScore;
-            // return columnScore;
-        }
-    }
-
-    refreshTotalScore(player) {
-        let score = 0;
-        let col1 = 0;
-        if (player.grid[0] == player.grid[1] && player.grid[0] == player.grid[2] && player.grid[0] != null) {
-            col1 = player.grid[0] * 9;
-        }
-        if (player.grid[0] == player.grid[1] && player.grid[0] != player.grid[2]) {
-            col1 = player.grid[0] * 4 + player.grid[2];
-        }
-        if (player.grid[0] == player.grid[2] && player.grid[0] != player.grid[1]) {
-            col1 = player.grid[0] * 4 + player.grid[1];
-        }
-        if (player.grid[1] == player.grid[2] && player.grid[1] != player.grid[0]) {
-            col1 = player.grid[1] * 4 + player.grid[0];
-        }
-        if (player.grid[0] != player.grid[1] && player.grid[0] != player.grid[2] && player.grid[1] != player.grid[2]) {
-            col1 = player.grid[0] + player.grid[1] + player.grid[2];
-        }
-        let col2 = 0;
-        if (player.grid[3] == player.grid[4] && player.grid[3] == player.grid[5] && player.grid[3] != null) {
-            col2 = player.grid[3] * 9;
-        }
-        if (player.grid[3] == player.grid[4] && player.grid[3] != player.grid[5]) {
-            col2 = player.grid[3] * 4 + player.grid[2];
-        }
-        if (player.grid[3] == player.grid[5] && player.grid[3] != player.grid[4]) {
-            col2 = player.grid[3] * 4 + player.grid[1];
-        }
-        if (player.grid[4] == player.grid[5] && player.grid[4] != player.grid[3]) {
-            col2 = player.grid[4] * 4 + player.grid[3];
-        }
-        if (player.grid[3] != player.grid[4] && player.grid[3] != player.grid[5] && player.grid[4] != player.grid[5]) {
-            col2 = player.grid[3] + player.grid[4] + player.grid[5];
-        }
-        let col3 = 0;
-        if (player.grid[6] == player.grid[7] && player.grid[6] == player.grid[8] && player.grid[6] != null) {
-            col3 = player.grid[6] * 9;
-        }
-        if (player.grid[6] == player.grid[7] && player.grid[6] != player.grid[8]) {
-            col3 = player.grid[6] * 4 + player.grid[8];
-        }
-        if (player.grid[6] == player.grid[8] && player.grid[6] != player.grid[7]) {
-            col3 = player.grid[6] * 4 + player.grid[7];
-        }
-        if (player.grid[7] == player.grid[8] && player.grid[7] != player.grid[6]) {
-            col3 = player.grid[7] * 4 + player.grid[6];
-        }
-        if (player.grid[6] != player.grid[7] && player.grid[6] != player.grid[8] && player.grid[7] != player.grid[8]) {
-            col3 = player.grid[6] + player.grid[7] + player.grid[8];
-        }
-        score = col1 + col2 + col3;
-        document.getElementById(`totalScore${player.id}`).innerText = score;
-    }
-
-    refreshColumnAndScore(player, nbColumn) {
-        this.refreshColumn(player, nbColumn)
-        this.refreshColumnScore(player, nbColumn)
-        this.refreshTotalScore(player)
-    }
-
-    choiceDice(player) {
-        document.getElementById(
-            `potPlayer${player.id}`
-        ).src = `assets/dices/choseDice.png`
-    }
-
-    load() {
-        document.getElementById("loading").classList.add("hide")
-        document.getElementById("background").classList.remove("hide")
-    }
-
-    refreshName() {
-        document.getElementById("namePlayer1").innerText = this.game.player2.name
     }
 }

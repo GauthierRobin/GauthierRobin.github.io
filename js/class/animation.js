@@ -1,59 +1,34 @@
-export class Animate {
-    constructor(player1, player2) {
-        this.player1 = player1;
-        this.player2 = player2;
-        this.stop = false;
+import { Sound } from "./sound.js"
 
+export class Animation extends Sound {
+    constructor() {
+        super()
     }
 
-    animate(balise, id) {
-        if (this.stop === false) {
+    explodeDice(playerId, columnId, caseId) {
+        const delay = 500
+        let time = 0
+        const animationDuration = 940
+
+        caseId.forEach(nbCase => {
+            const imgCase = $(`#player${playerId}-col${columnId}-case-${nbCase} img`)
+
+            imgCase.attr("data-value", "null")
+
             setTimeout(() => {
-                const bomb = document.getElementById('bomb');
-                bomb.volume = 0.1;
-                bomb.play();
-                balise.innerHTML = (`<img class='explode' src=assets/animationsEffect/explosion.png\ alt="" />`);
-                console.log(balise);
-                this.stop = true;
-            }, 300);
-            setTimeout(() => {
-                this.resetAnime(this.player1, this.player2)
-            }, 1300);
-        }
-    }
+                this.overlapPlay("boom", 0.2, false)
+                imgCase.attr("src", "#")
+                    .attr("src", "assets/animationsEffect/explosion.png")
+                    .attr("class", "explode")
 
-    resetAnime(gamePLayer, otherPlayer) {
-        gamePLayer.setSortedGrid();
-        otherPlayer.setSortedGrid();
+                setTimeout(() => {
+                    imgCase.attr("class", "")
+                        .attr("src", "#")
+                }, animationDuration)
+            }, time)
+            time += delay
+        })
 
-
-        for (let i = 0; i < 3; i++) {
-            gamePLayer.getFormatGrid()[i].forEach((caseValue, caseId) => {
-                if (caseValue != null) {
-                    document.getElementById(
-                        `player${gamePLayer.id}-col${i + 1}-case-${caseId + 1}`
-                    ).innerHTML = `<img src="assets/dices/Dice${caseValue}.png" alt=""/>`
-                }
-                else {
-                    document.getElementById(`player${gamePLayer.id}-col${i + 1}-case-${caseId + 1}`).innerHTML = ""
-                }
-            })
-
-            otherPlayer.getFormatGrid()[i].forEach((caseValue, caseId) => {
-                if (caseValue != null) {
-                    document.getElementById(
-                        `player${otherPlayer.id}-col${i + 1}-case-${caseId + 1}`
-                    ).innerHTML = `<img src="assets/dices/Dice${caseValue}.png" alt=""/>`
-                }
-                else {
-                    document.getElementById(`player${otherPlayer.id}-col${i + 1}-case-${caseId + 1}`).innerHTML = ""
-                }
-            })
-            for (let j = 1; j <= 3; j++) {
-                for (let k = 1; k <= 2; k++) {
-                    document.getElementById(`player${k}-col${i + 1}-case-${j}`).classList.remove('explode');
-                }
-            }
-        }
+        return delay * caseId.length
     }
 }
