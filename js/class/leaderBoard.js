@@ -14,7 +14,7 @@ export class Leaderboard {
         $(this.btnId).on("click", () => {
             $.ajax({
                 type: "POST",
-                url: "http://127.0.0.1:8080/api/rating/all",
+                url: "https://pirate-dice-serveur.herokuapp.com/api/rating/all",
                 success: function (response) {
                     this.add(response)
 
