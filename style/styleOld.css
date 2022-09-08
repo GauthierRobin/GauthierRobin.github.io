@@ -1,0 +1,709 @@
+#leaderboard-page {
+    display: none;
+    position: absolute;
+    padding: 2%;
+    background-color: rgba(210, 210, 255, 0.491);
+    z-index: 5;
+    border-radius: 10px;
+}
+
+#leaderboard-table {
+    padding: 10%;
+}
+
+#leaderboard-btn {
+    position: absolute;
+    z-index: 5;
+    margin-right: 50%;
+}
+
+#player-infos {
+    position: absolute;
+    z-index: 10;
+    top: 1%;
+}
+
+/* #signup {
+    position: absolute;
+    z-index: 10;
+    top: 30%;
+}
+
+#signin {
+    position: absolute;
+    z-index: 10;
+    top: 20%;
+} */
+
+/* #################### begin menu #################### */
+.clignote {
+    background-color: transparent;
+    box-shadow: 0 0 100px black;
+    animation: clignote 2s linear;
+}
+
+@keyframes clignote {
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(359deg);
+    }
+}
+
+#gouvernail {
+    animation: rotation 2s infinite linear;
+    position: absolute;
+    margin-bottom: 20%;
+    margin-left: 80%;
+    width: 20%;
+}
+
+#load {
+    position: absolute;
+    margin-bottom: 27%;
+    margin-left: 110%;
+    width: 20%;
+}
+
+#bgInput {
+    margin-right: 50%;
+    margin-top: 30%;
+    z-index: 2;
+    width: 30%;
+    position: absolute;
+}
+
+#input {
+    font-family: cursive;
+    color: #fff;
+    z-index: 3;
+    position: absolute;
+    border: none;
+    font-size: auto;
+    margin-right: 40%;
+    margin-top: 30%;
+    background-color: transparent;
+    width: 15%;
+    height: 10%;
+}
+
+#randomName {
+    background-color: transparent;
+    border: none;
+    z-index: 3;
+    position: absolute;
+    width: 7%;
+    margin-right: 70%;
+    margin-top: 30%;
+}
+
+#redirectionSolo {
+    background-color: transparent;
+    margin-top: 10%;
+    margin-left: 60%;
+    border: none;
+    width: 22%;
+    position: absolute;
+    z-index: 3;
+}
+
+#redirectionMulti {
+    background-color: transparent;
+    margin-top: 30%;
+    margin-left: 60%;
+    border: none;
+    width: 25%;
+    position: absolute;
+    z-index: 3;
+}
+
+#logo {
+    background-color: transparent;
+    position: absolute;
+    margin-bottom: 40%;
+    margin-right: 80%;
+    width: 25%;
+}
+
+/* #################### global #################### */
+
+body {
+    font-family: cursive;
+    background-color: white;
+    overflow: hidden;
+}
+
+body, html, #wrapper, #wrapper2 {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+#background, #wrapper, #wrapper2, #backg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+#btn-rules {
+    background-color: transparent;
+    border: none;
+    width: 20%;
+    position: absolute;
+    z-index: 5;
+    margin-left: 81%;
+    margin-bottom: 37.7%;
+}
+
+#rulesImg {
+    filter: brightness(0.7);
+    background-color: transparent;
+    border: none;
+    position: relative;
+    display: none;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+}
+
+#rules {
+    position: absolute;
+    width: 100%;
+}
+
+#oppacity {
+    background-color: black;
+    top: 0;
+    left: 0;
+    opacity: 60%;
+    border: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 8;
+}
+
+#returnToTheGame {
+    background-color: transparent;
+    display: none;
+    border: none;
+    width: 15%;
+    position: absolute;
+    z-index: 10;
+    left: 25%;
+    top: 70%;
+
+}
+
+/* #################### background ####################*/
+#loading {
+    position: relative;
+    display: flex;
+    justify-content: end;
+    align-items: flex-end;
+    z-index: 100;
+}
+
+#load-info {
+    position: absolute;
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#load-info p {
+    width: 100%;
+    color: black;
+    font-size: 3vw;
+}
+
+#background {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#backg {
+    position: absolute;
+    width: 100%;
+    /* height: 100%; */
+}
+
+#fond {
+    position: absolute;
+    z-index: 1;
+}
+
+#fond2 {
+    position: absolute;
+    z-index: 1;
+}
+
+.fond {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+}
+
+#nappe {
+    position: absolute;
+    z-index: 2;
+}
+
+#cadre {
+    position: absolute;
+    z-index: 3;
+}
+
+#lore {
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    margin-top: 30%;
+    margin-right: 70%;
+    width: 25%;
+    z-index: 7;
+}
+
+/* #################### rolls #################### */
+
+#rolls {
+    position: absolute;
+    z-index: 4;
+    display: flex;
+    flex-direction: row-reverse;
+    transform: rotate(360deg);
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+#ui-haut, #ui-bas {
+    height: 50%;
+    width: 20%;
+}
+
+#ui-haut {
+    margin-left: 2%;
+    margin-bottom: 28%;
+}
+
+#ui-bas {
+    margin-top: 35%;
+    margin-right: 3%;
+}
+
+#roll-bas {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    height: 80%;
+}
+
+#roll-haut {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+}
+
+#roll-bas img, #roll-haut img {
+    cursor: pointer;
+    position: absolute;
+}
+
+.choice-dice {
+    border-radius: 20%;
+    width: 30%;
+}
+
+#score2 {
+    transform: rotate(180deg);
+    width: 80%;
+    margin-bottom: 110%;
+    margin-right: 37%;
+    position: relative;
+}
+
+#score1 {
+    width: 80%;
+    margin-top: 110%;
+    margin-left: 37%;
+    position: relative;
+}
+
+.totalScore1 {
+    z-index: 5;
+    position: relative;
+    left: -3%;
+    top: 50%;
+    height: 10%;
+}
+
+.totalScore2 {
+    z-index: 5;
+    position: relative;
+    left: 3%;
+    bottom: 50%;
+    height: 10%;
+}
+
+#namePlayer2 {
+    z-index: 5;
+    position: absolute;
+    right: 16%;
+    margin-bottom: -5%;
+}
+
+#namePlayer1 {
+    z-index: 5;
+    position: absolute;
+    left: 15%;
+    margin-top: -10%;
+}
+
+.totalScore1, .totalScore2, .columnScore1, .columnScore2 {
+    color: white;
+    text-align: center;
+    font-size: 1.5vw;
+}
+
+#namePlayer1, #namePlayer2 {
+    color: white;
+    text-align: center;
+    font-size: 1.5vw;
+}
+
+/* #################### grid #################### */
+
+#grids {
+    position: absolute;
+    height: 100%;
+    width: 40%;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#grille1 {
+    transform: rotate(180deg);
+    flex-direction: row-reverse;
+}
+
+.grille {
+    padding: 5%;
+    display: flex;
+    width: 60%;
+    height: 40%;
+}
+
+.col {
+    padding: 5%;
+    flex: 1;
+}
+
+.columnScore1 {
+    transform: rotate(180deg);
+}
+
+.columnScore1, .columnScore2 {
+    min-height: 12%;
+}
+
+.case {
+    cursor: pointer;
+    border: solid 0.3rem #801502;
+    border-radius: 15%;
+    padding: 4%;
+    margin-top: 4%;
+    margin-left: 4%;
+    margin-right: 4%;
+    margin-bottom: 4%;
+    height: 20%;
+    display: flex;
+    z-index: 3;
+    justify-content: center;
+    align-items: center;
+}
+
+.case img {
+    border-radius: 20%;
+}
+
+/* ################## end menu ################## */
+
+.quit {
+    position: absolute;
+    margin-bottom: -35%;
+    width: 14%;
+    cursor: pointer;
+}
+
+#quitGame {
+    filter: drop-shadow(0 0 30rem rgb(255, 179, 0));
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    margin-top: 45%;
+    margin-right: 86%;
+    width: 7%;
+    z-index: 7;
+}
+
+#end-menu {
+    filter: none;
+    animation: fadeIn 5s;
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#parchemin {
+    filter: brightness(0.7);
+    margin-top: 10%;
+    position: relative;
+    width: 75%;
+    padding-bottom: 9%;
+}
+
+.score-txt {
+    position: absolute;
+    text-align: center;
+    top: 32%;
+    width: 100%;
+    font-family: cursive;
+    font-size: 3vw;
+    color: rgb(70, 23, 0);
+    margin: 0;
+}
+
+.reset {
+    display: flex;
+    position: absolute;
+    margin-bottom: -30%;
+    margin-right: 10%;
+    width: 12%;
+    cursor: pointer;
+}
+
+#resetBtn {
+    margin-top: 8.6%;
+    width: 80%;
+    height: 80%;
+}
+
+
+/* ################## animation ################## */
+
+#btn-rules:hover, #returnToTheGame:hover, #lore:hover, #redirectionSolo:hover, #redirectionMulti:hover, .reset:hover, #quitGame:hover {
+    transform: scale(1.05)
+}
+
+#btn-rules:active, #returnToTheGame:active, #lore:active, #redirectionSolo:active, #redirectionMulti:active, .reset:active, #quitGame:active {
+    transform: scale(1)
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes vibrate {
+    0%, 2%, 4%, 6%, 8%, 10%, 12%, 14%, 16%, 18% {
+        -webkit-transform: translate3d(-1px, 0, 0);
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    1%, 3%, 5%, 7%, 9%, 11%, 13%, 15%, 17%, 19% {
+        -webkit-transform: translate3d(1px, 0, 0);
+        transform: translate3d(1px, 0, 0);
+    }
+
+    20%, 100% {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes brum {
+    0% {
+        filter: blur(0);
+    }
+
+    0% {
+        filter: blur(2);
+    }
+
+    100% {
+        filter: blur(0);
+    }
+}
+
+.fadeIn {
+    animation: fadeIn 10s;
+}
+
+.explode {
+    transform: scale(6.2);
+    z-index: 9;
+    background-color: transparent;
+}
+
+.vibrate {
+    animation: vibrate 5s cubic-bezier(.36, .07, .19, .97);
+}
+
+.hide {
+    display: none !important;
+}
+
+.brum {
+    animation: brum 3s;
+}
+
+#begin {
+    z-index: 0;
+    position: fixed;
+}
+
+#oppacity, #rulesImg, #returnToTheGame {
+    display: none;
+}
+
+/* ################# formulaire ####################### */
+
+#signup {
+    display: none;
+}
+
+.form {
+    width: 20%;
+    background-color: rgba(255, 255, 255, 0.638);
+    box-shadow: 0px 0px 10px 10px rgba(255, 255, 255, 0.638);
+    border-radius: 2vh;
+    min-width: 310px;
+    margin: 0;
+    z-index: 5;
+}
+
+.form form {
+    margin: 0;
+    width: 100%;
+}
+
+.form h1 {
+    text-align: center;
+    margin: 0;
+    padding: 2% 0 2% 0;
+}
+
+.form-control {
+    width: 90%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background: orange;
+    padding: 1% 1.2% 1% 0;
+    margin: 3% 0 3% 0;
+    border-radius: 0 0.4rem 0.4rem 0;
+}
+
+.form-control::after {
+    content: "";
+    position: absolute;
+    width: 60%;
+    max-height: 1px;
+    right: 6%;
+    bottom: 25%;
+    border-bottom: 1px solid white;
+}
+
+.form-control label {
+    text-align: center;
+    width: 30%;
+    padding: 2% 0 2% 0;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    border-left: 1px solid white;
+}
+
+.form-control input {
+    flex-grow: 1;
+    background-color: transparent;
+    padding: 0 4% 0 4%;
+    border: 1px solid white;
+    border-radius: 0 0.3rem 0.3rem 0;
+}
+
+
+.form-control input:active {
+    padding: 0;
+    border: 1px solid white;
+}
+
+.form .btn-container {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.btn-container-space {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.form #new-user-btn {
+    background-color: transparent;
+    border: 1px solid orange;
+    padding: 1%;
+    margin: 1% 0 0 5%;
+}
+
+.form .submit-btn {
+    display: block;
+    width: 20%;
+    padding: 2% 0 2% 0;
+    margin: 0 0 3% 0;
+    background-color: orange;
+    border: 5px solid white;
+    border-right: none;
+    box-shadow: -1px 0px 0px 1px orange,
+        -1px 1px 0px 1px orange,
+        -1px -1px 0px 1px orange,
+        10px 0px 10px 0px orange;
+    border-radius: 10px 0 0 10px;
+}
