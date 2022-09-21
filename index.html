@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<link rel="icon" href="assets/pieces.ico"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link
+		rel="stylesheet" href="style/style.css"/>
+		<!-- <link rel="stylesheet" href="style/veryOldStyle.css"/> -->
+		<script src="https://kit.fontawesome.com/b7c84a7a15.js" crossorigin="anonymous"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<!-- <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script> -->
+		<!-- <script defer src="js/loader.js"></script> -->
+		<script src="https://unpkg.com/socket.io-client@4.5.0/dist/socket.io.min.js"></script>
+		<script defer type="module" src="js/index.js"></script>
+		<title>The Pirate's Dice</title>
+	</head>
+	<body>
+		<div id="sound">
+			<audio id="beginSong" src="assets/soundsEffect/begin.mp3"></audio>
+			<audio id="boom" src="assets/soundsEffect/boom.mp3"></audio>
+			<audio id="SeaSound" src="assets/soundsEffect/SeaSound.mp3" autoplay="true"></audio>
+			<audio id="bgAudio" src="assets/soundsEffect/bgSound.mp3" autoplay="true"></audio>
+			<audio id="dropCoin" src="assets/soundsEffect/dropCoin.mp3"></audio>
+			<audio id="closeRulesBook" src="assets/soundsEffect/closeRulesBook.mp3"></audio>
+			<audio id="rulesBookSound" src="assets/soundsEffect/rulesBookSound.mp3"></audio>
+			<audio id="diceSound" src="assets/soundsEffect/diceDrop.mp3"></audio>
+			<audio id="aiSoundDice" src="assets/soundsEffect/diceDrop.mp3"></audio>
+		</div>
+
+		<div id="index" class="wrapper hide">
+			<header class="hide">
+				<div id="head-menu">
+					<nav>
+						<ul>
+							<li>
+								<button id="menu-principal-btn" type="button">Menu principale</button>
+							</li>
+							<li>
+								<button id="leaderboard-btn" type="button">Leaderboard</button>
+							</li>
+							<li>
+								<button id="shop-btn" type="button">Boutique</button>
+							</li>
+						</ul>
+						<div id="player-info">
+							<p id="player-name"></p>
+							<div id="account">
+								<i class="fa-solid fa-user fa-xl"></i>
+							</div>
+						</div>
+					</nav>
+				</div>
+			</header>
+
+			<img id="backg" class="img-fit" src="" alt="">
+			<div class="logo-container">
+				<img src="https://ik.imagekit.io/iq52ivedsj/assets/logo-FINAL-04_EKK-kI02J.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986927928" alt="">
+			</div>
+
+			<section id="login-menu" class="page-menu hide">
+				<div id="form-container">
+					<div id="signup" class="form hide">
+						<h1>S'inscrire</h1>
+						<form id="signup-form" action="#">
+							<div class="form-control">
+								<label for="mail">Mail</label>
+								<input type="email" name="email" required>
+							</div>
+							<div class="form-control">
+								<label for="pseudo">Pseudo</label>
+								<input type="text" name="pseudo" required>
+							</div>
+							<div class="form-control">
+								<label for="password">Password</label>
+								<input type="password" name="password" required>
+							</div>
+
+							<div class="btn-container">
+								<button type="button" id="signup-submit" class="submit-btn">
+									<i class="fa-solid fa-check fa-xl"></i>
+								</button>
+							</div>
+						</form>
+					</div>
+
+					<div id="signin" class="form">
+						<h1>Se connecter</h1>
+						<form id="signin-form" action="#">
+							<div class="form-control">
+								<label for="pseudo">Pseudo</label>
+								<input type="text" name="pseudo" required>
+							</div>
+							<div class="form-control">
+								<label for="password">Password</label>
+								<input type="password" name="password" required>
+							</div>
+
+							<div class="btn-container-space">
+								<button type="button" id="new-user-btn">Je n'ai pas de compte</button>
+								<button type="button" id="signin-submit" class="submit-btn">
+									<i class="fa-solid fa-check fa-xl"></i>
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</section>
+
+			<section id="menu-principal" class="page-menu hide">
+				<h1></h1>
+				<div id="mode-menu-container">
+					<div id="mode-menu">
+						<button id="redirectionSolo" class="btn-transparent">
+							<img src="https://ik.imagekit.io/iq52ivedsj/assets/solo_WHb3hxECH.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986941093" alt="">
+						</button>
+						<button id="redirectionMulti" class="btn-transparent">
+							<img src="https://ik.imagekit.io/iq52ivedsj/assets/multi_G6S-smL65z.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986940676" alt="">
+						</button>
+					</div>
+				</div>
+			</section>
+
+			<section id="leaderboard" class="page-menu hide">
+				<div id="leaderboard-container">
+					<table id="leaderboard-table"></table>
+					<div id="leaderboard-player-info">
+						<div>
+							<p id="leaderboard-player-pseudo"></p>
+							<p id="leaderboard-player-rating">1/10</p>
+						</div>
+						<p id="leaderboard-player-elo">1510</p>
+					</div>
+				</div>
+			</section>
+
+			<section id="shop" class="page-menu hide">
+				<div id="shop-bonus">
+					<ul></ul>
+				</div>
+			</section>
+
+		</div>
+
+		<div id="game" class="hide">
+			<div id="wrapper" class="">
+				<div id="rules">
+					<div id="oppacity"></div>
+					<img id="rulesImg" src="https://ik.imagekit.io/iq52ivedsj/assets/rules_ROww_5bvR.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662987080304" alt=""/>
+				</div>
+
+				<button id="btn-rules" class="">
+					<img src="https://ik.imagekit.io/iq52ivedsj/assets/rulesBtn__tgNoo_Yj.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986949295" alt=""/>
+				</button>
+
+				<button id="lore" class="">
+					<img src="https://ik.imagekit.io/iq52ivedsj/assets/pieces_jo4ovO8J0.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986935971" alt="">
+				</button>
+
+				<button id="returnToTheGame">
+					<img src="https://ik.imagekit.io/iq52ivedsj/assets/returnToTheGame_vd6nEsgBE.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986935888" alt=""/>
+				</button>
+
+				<p id="namePlayer2"></p>
+				<p id="namePlayer1"></p>
+
+				<img id="fond" src="https://ik.imagekit.io/iq52ivedsj/assets/fond_On7kzCaht.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662987059086">
+				<img id="nappe" src="https://ik.imagekit.io/iq52ivedsj/assets/nappe_dxy4e_8vX.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986991309">
+				<img id="cadre" src="https://ik.imagekit.io/iq52ivedsj/assets/cadre_loHnyB1zn.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986959680">
+
+				<section id="rolls">
+					<div id="ui-bas">
+						<div id="roll-bas">
+							<img id="score2" src="https://ik.imagekit.io/iq52ivedsj/assets/caseScore_DnjnCAx3t.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986920261" alt="">
+							<div id="totalScore2" class="totalScore2">0</div>
+
+							<img src="https://ik.imagekit.io/iq52ivedsj/assets/rollbas_IgcEs8UX-.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986946600">
+							<img id="potPlayer2" class="choice-dice" src="https://ik.imagekit.io/iq52ivedsj/assets/dices/choseDice_ftS4YvZbV.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986918825" alt="">
+						</div>
+					</div>
+
+					<div id="ui-haut">
+						<div id="roll-haut">
+							<img id="score1" src="https://ik.imagekit.io/iq52ivedsj/assets/caseScore_DnjnCAx3t.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986920261" alt="">
+							<div id="totalScore1" class="totalScore1">0</div>
+
+							<img src="https://ik.imagekit.io/iq52ivedsj/assets/rollhaut_i40Hx7Lzp.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986947340">
+							<img id="potPlayer1" class="choice-dice" src="https://ik.imagekit.io/iq52ivedsj/assets/dices/choseDice_ftS4YvZbV.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986918825" alt="">
+						</div>
+					</div>
+				</section>
+
+				<div id="grids">
+					<div id="grille1" class="grille">
+						<div class="col" id="player1-col1">
+							<div id="totalScore1Column1" class="columnScore1"></div>
+							<div id="player1-col1-case-1" class="case"><img src="#" alt="" data-value="null" data-case="0"></div>
+							<div id="player1-col1-case-2" class="case"><img src="#" alt="" data-value="null" data-case="1"></div>
+							<div id="player1-col1-case-3" class="case"><img src="#" alt="" data-value="null" data-case="2"></div>
+						</div>
+
+						<div class="col" id="player1-col2">
+							<div id="totalScore1Column2" class="columnScore1"></div>
+							<div id="player1-col2-case-1" class="case"><img src="#" alt="" data-value="null" data-case="3"></div>
+							<div id="player1-col2-case-2" class="case"><img src="#" alt="" data-value="null" data-case="4"></div>
+							<div id="player1-col2-case-3" class="case"><img src="#" alt="" data-value="null" data-case="5"></div>
+						</div>
+
+						<div class="col" id="player1-col3">
+							<div id="totalScore1Column3" class="columnScore1"></div>
+							<div id="player1-col3-case-1" class="case"><img src="#" alt="" data-value="null" data-case="6"></div>
+							<div id="player1-col3-case-2" class="case"><img src="#" alt="" data-value="null" data-case="7"></div>
+							<div id="player1-col3-case-3" class="case"><img src="#" alt="" data-value="null" data-case="8"></div>
+						</div>
+					</div>
+
+					<div id="grille2" class="grille">
+						<div class="col" id="player2-col1">
+							<div id="totalScore2Column1" class="columnScore2"></div>
+							<div id="player2-col1-case-1" class="case"><img src="#" alt="" data-value="null" data-case="0"></div>
+							<div id="player2-col1-case-2" class="case"><img src="#" alt="" data-value="null" data-case="1"></div>
+							<div id="player2-col1-case-3" class="case"><img src="#" alt="" data-value="null" data-case="2"></div>
+						</div>
+
+						<div class="col" id="player2-col2">
+							<div id="totalScore2Column2" class="columnScore2"></div>
+							<div id="player2-col2-case-1" class="case"><img src="#" alt="" data-value="null" data-case="3"></div>
+							<div id="player2-col2-case-2" class="case"><img src="#" alt="" data-value="null" data-case="4"></div>
+							<div id="player2-col2-case-3" class="case"><img src="#" alt="" data-value="null" data-case="5"></div>
+						</div>
+
+						<div class="col" id="player2-col3">
+							<div id="totalScore2Column3" class="columnScore2"></div>
+							<div id="player2-col3-case-1" class="case"><img src="#" alt="" data-value="null" data-case="6"></div>
+							<div id="player2-col3-case-2" class="case"><img src="#" alt="" data-value="null" data-case="7"></div>
+							<div id="player2-col3-case-3" class="case"><img src="#" alt="" data-value="null" data-case="8"></div>
+						</div>
+					</div>
+				</div>
+
+				<button id="inventory-btn">
+					<i class="fa-solid fa-book-skull fa-2xl"></i>
+				</button>
+
+				<div id="inventory-menu" class="hide">
+					<div>
+						<div id="inventory-items">
+							<h1>BONUS</h1>
+							<ul></ul>
+						</div>
+						<div id="inventory-close">
+							<img src="https://ik.imagekit.io/iq52ivedsj/assets/quitBtn_X1x10G28x.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986933210" alt="">
+						</div>
+					</div>
+				</div>
+
+				<button id="quitGame">
+					<img src="https://ik.imagekit.io/iq52ivedsj/assets/quitBtn_X1x10G28x.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986933210" alt="">
+				</button>
+
+				<div id="end-menu" class="hide-important">
+					<div id="parchemin">
+						<img id="scoreImg" src="https://ik.imagekit.io/iq52ivedsj/assets/score_tfEPzX4ZR.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662987039605">
+						<p id="scoreMenu" class="score-txt">0 - 0</p>
+					</div>
+
+					<div class="quit">
+						<img id="quitBtn" src="https://ik.imagekit.io/iq52ivedsj/assets/quitBtn_X1x10G28x.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986933210">
+					</div>
+				</div>
+
+				<div id="bet">
+					<div id="bet-form">
+						<form action="#">
+							<label for="bet-value">
+								Mise des points
+							</label>
+							<input type="text" name="bet-value" value="0">
+							<button type="button">Valider</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
