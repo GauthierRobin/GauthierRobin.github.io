@@ -1,6 +1,6 @@
 $.ajax({
     type: "POST",
-    url: "http://serve.alwaysdata.net/api/rating/all",
+    url: "http://serve.alwaysdata.net/api/rating/all/",
     success: function (response) {
         console.log(response)
     },
