@@ -14,7 +14,7 @@ export class Game {
         this.sound = new Sound()
         this.animation = new Animation()
         this.loader = new Loader()
-        this.client = new Client(this, true) // true for local serveur, false for heroku serveur
+        this.client = new Client(this, false) // true for local serveur, false for heroku serveur
     }
 
     init() {
