@@ -14,7 +14,7 @@ export class Leaderboard {
         $(this.btnId).on("click", () => {
             $.ajax({
                 type: "POST",
-                url: "https://pirate-dice-serveur.herokuapp.com/api/rating/all",
+                url: "https://serve.alwaysdata.net//api/rating/all/",
                 success: function (response) {
                     this.add(response)
 

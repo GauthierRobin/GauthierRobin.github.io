@@ -2,36 +2,22 @@ import { Login } from "./class/login.js"
 import { Leaderboard } from "./class/leaderBoard.js"
 import { Game } from "./class/game.js"
 import { Loader } from "./class/loader.js"
-
-const resize = () => {
-    let body = document.body,
-        html = document.documentElement;
-
-    var height = Math.max(body.scrollHeight, body.offsetHeight,
-        html.clientHeight, html.scrollHeight, html.offsetHeight);
-
-    document.getElementById("backg").style.height = height + "px"
-}
-
+import { Shop } from "./class/shop.js"
 
 const changeBackground = () => {
     const bg = document.getElementById('backg');
     const time = new Date().getHours() + 1;
 
     if (time >= 8 && time < 13) {
-        bg.setAttribute('src', 'assets/bg1.png');
+        bg.setAttribute('src', 'https://ik.imagekit.io/iq52ivedsj/assets/bg1_xedqZJjiY.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662987064789');
     }
     else if (time >= 13 && time < 18) {
-        bg.setAttribute('src', 'assets/bg2.png');
+        bg.setAttribute('src', 'https://ik.imagekit.io/iq52ivedsj/assets/bg2_ILScAgZGCc.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662987081708');
     }
     else {
-        bg.setAttribute('src', 'assets/bg3.png');
+        bg.setAttribute('src', 'https://ik.imagekit.io/iq52ivedsj/assets/bg3_WXdvDGb2b.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662987044446');
     }
 }
-
-window.addEventListener("resize", () => {
-    resize()
-})
 
 const loader = new Loader()
 loader.add("Loading ...")
@@ -40,14 +26,13 @@ window.addEventListener('load', function () {
     setTimeout(() => {
         loader.remove()
     }, 500)
-    $("#index").fadeIn(400)
+    $("#wrapper").fadeIn(400)
 
     var SeaSound = document.getElementById('SeaSound')
     SeaSound.volume = 0.1
     SeaSound.loop = "true"
 }, false)
 
-resize()
 changeBackground()
 
 const login = new Login()
@@ -58,10 +43,14 @@ login.signin()
 const leaderBoard = new Leaderboard()
 leaderBoard.init()
 
+const shop = new Shop()
+shop.showBonus()
+
 const game = new Game()
 game.init()
 
 $('#redirectionSolo').on('click', () => {
+    console.log("ok");
     const pseudo = localStorage.getItem("pseudo")
     const password = localStorage.getItem("password")
     if (pseudo !== null && password !== null) {
@@ -93,4 +82,10 @@ $("#menu-principal-btn").on("click", () => {
     $("#menu-principal").fadeIn(400)
     $("#leaderboard").fadeOut(400)
     $("#shop").fadeOut(400)
+})
+
+$("#shop-btn").on("click", () => {
+    $("#menu-principal").fadeOut(400)
+    $("#leaderboard").fadeOut(400)
+    $("#shop").fadeIn(400)
 })

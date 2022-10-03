@@ -12,7 +12,7 @@ export class Login {
         if (pseudo !== null && password !== null) {
             $.ajax({
                 type: "POST",
-                url: "https://pirate-dice-serveur.herokuapp.com/api/auth/autoconnect",
+                url: "https://serve.alwaysdata.net/api/auth/autoconnect/",
                 data: {
                     "pseudo": pseudo,
                     "password": password
@@ -44,7 +44,7 @@ export class Login {
         document.getElementById("signin-submit").addEventListener("click", () => {
             $.ajax({
                 type: "POST",
-                url: "https://pirate-dice-serveur.herokuapp.com/api/auth/signin",
+                url: "https://serve.alwaysdata.net/api/auth/signin/",
                 data: {
                     "pseudo": this.pseudo,
                     "password": this.password
@@ -76,7 +76,7 @@ export class Login {
         document.getElementById("signup-submit").addEventListener("click", () => {
             $.ajax({
                 type: "POST",
-                url: "https://pirate-dice-serveur.herokuapp.com/api/auth/signup",
+                url: "https://serve.alwaysdata.net/api/auth/signup/",
                 data: {
                     "pseudo": this.pseudo,
                     "email": this.email,

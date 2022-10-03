@@ -1,5 +1,7 @@
-export class Player {
+import { Inventory } from "./inventory.js"
+export class Player extends Inventory {
     constructor(game, htmlTab, id) {
+        super()
         this.game = game
         this.otherPlayer = null
         this.htmlTab = htmlTab
@@ -15,7 +17,7 @@ export class Player {
             let dataSet = "null"
 
             if (dice !== "null") {
-                imgSrc = `assets/dices/Dice${dice}.png`
+                imgSrc = `https://ik.imagekit.io/iq52ivedsj/assets/dices/Dice${dice}.png?ik-sdk-version=javascript-1.4.3`
                 dataSet = dice
             }
 
@@ -52,9 +54,9 @@ export class Player {
         const scoreColumn = this.evalScoreColumn(columnId)
 
         if (scoreColumn > 0) {
-            $(`#totalScore${this.id}Column${columnId}`).html(scoreColumn)
+            $(`#totalScore${this.id}Column${columnId} p`).html(scoreColumn)
         } else {
-            $(`#totalScore${this.id}Column${columnId}`).html("")
+            $(`#totalScore${this.id}Column${columnId} p`).html("")
         }
     }
 
@@ -103,6 +105,7 @@ export class Player {
     initControl() {
         this.controlChoiceDice()
         this.controlColumn()
+        this.initInventory()
     }
 
     controlChoiceDice() {

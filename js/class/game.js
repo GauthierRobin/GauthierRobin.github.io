@@ -14,12 +14,12 @@ export class Game {
         this.sound = new Sound()
         this.animation = new Animation()
         this.loader = new Loader()
-        this.client = new Client(this, false) // true for local serveur, false for heroku serveur
+        this.client = new Client(this, true) // true for local serveur, false for heroku serveur
     }
 
     init() {
-        this.player1 = new Player(this, document.getElementById("grille2"), 2)
-        this.player2 = new Player(this, document.getElementById("grille1"), 1)
+        this.player1 = new Player(this, document.getElementById("grille1"), 1)
+        this.player2 = new Player(this, document.getElementById("grille2"), 2)
 
         this.client.init()
 
@@ -37,17 +37,17 @@ export class Game {
 
         switch (mode) {
             case "solo":
-                this.client.joinSolo()
+                this.client.joinRoom(mode, this.player1.name)
                 this.show()
                 break;
 
             case "multi":
                 $("#index").fadeOut(400)
                 this.loader.add("En attente d'un autre joueur ...")
-                this.client.joinMulti()
+                this.client.joinRoom(mode, this.player1.name)
                 break;
 
-            default: this.client.joinSolo(); break;
+            default: this.client.joinRoom(mode, this.player1.name); break;
         }
     }
 
