@@ -5,7 +5,7 @@ export class Client {
         this.local = local
         this.game = game
         this.socket
-        this.localUrl = "http://serve.alwaysdata.net/players"
+        this.localUrl = "http://localhost:8080/players"
         this.servUrl = "https://pirate-dice-serveur.herokuapp.com/players/"
         this.loader = new Loader()
     }
