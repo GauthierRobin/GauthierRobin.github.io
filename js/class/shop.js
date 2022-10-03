@@ -7,7 +7,7 @@ export class Shop {
     showBonus() {
         $.ajax({
             type: "POST",
-            url: "http://serve.alwaysdata.net/api/shop/category",
+            url: "https://serve.alwaysdata.net/api/shop/category/",
             data: { category: "Bonus" },
             dataType: "json",
             success: function (response) {
