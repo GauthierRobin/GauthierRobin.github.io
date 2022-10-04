@@ -11,7 +11,7 @@ export class Ui {
 
         this.bet = $("#bet")
         this.betInput = $("#bet-form input")
-        this.betBtn = $("#bet-form button img")
+        this.betBtn = $("#bet-form button")
     }
 
     init() {
@@ -142,6 +142,7 @@ export class Ui {
 
     sendBet() {
         this.betBtn.on("click", () => {
+            console.log("send bet")
             const betValueStr = this.betInput.val()
             const betValueInt = parseInt(betValueStr)
 
