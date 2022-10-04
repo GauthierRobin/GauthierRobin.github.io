@@ -11,7 +11,7 @@ export class Ui {
 
         this.bet = $("#bet")
         this.betInput = $("#bet-form input")
-        this.betBtn = $("#bet-form button")
+        this.betBtn = $("#bet-form button img")
     }
 
     init() {
