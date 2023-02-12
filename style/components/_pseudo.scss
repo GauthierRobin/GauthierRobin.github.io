@@ -1,0 +1,23 @@
+@use "../abstracts/variables" as var;
+@use "../abstracts/mixin" as mixin;
+
+.pseudo {
+    padding: 20%;
+    border: 2px solid var.$white;
+
+    @include mixin.media-min-width(650px) {
+        padding: 5%;
+    }
+}
+
+.pseudo-left {
+    padding-right: 20%;
+    border-radius: 0 20vw 20vw 0;
+    @extend .pseudo;
+}
+
+.pseudo-rigth {
+    padding-left: 20%;
+    border-radius: 20vw 0 0 20vw;
+    @extend .pseudo;
+}

@@ -1,0 +1,5 @@
+@use "../core/display";
+
+#index {
+    @extend .hide;
+}

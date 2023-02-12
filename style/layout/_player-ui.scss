@@ -1,0 +1,68 @@
+@use "../abstracts/mixin" as mixin;
+@use "../core/flex";
+@use "../core/width";
+
+#player-ui {
+    @extend .f-column, .f-jc-sp-bw;
+    
+    @include mixin.media-min-width(650px) {
+        flex-direction: row;
+    }
+
+    #ui-bas, #ui-haut {
+        @extend .flex, .w-100;
+        height: 15%;
+        
+        @include mixin.media-min-width(650px) {
+            display: block;
+            width: 25%;
+            height: auto;
+        }
+    }
+
+    #ui-bas {
+        @extend .f-jc-end;
+        align-self: flex-end;
+        
+        &:last-child {
+            @extend .rolls;
+        }
+    }
+
+    #ui-haut {
+        align-self: flex-start;
+
+        &:first-child {
+            @extend .rolls;
+        }
+    }
+    
+    
+    .rolls {
+        width: 45%;
+        max-width: 150px;
+        min-width: 100px;
+        
+        @include mixin.media-min-width(650px) {
+            width: 20%;
+            max-width: 250px;
+        }
+    }
+
+    #roll-bas {
+        @extend .f-jc-end;
+        
+        @include mixin.media-min-width(650px) {
+            justify-content: end;
+        }
+    }
+
+    #roll-haut {
+        justify-content: flex-start;
+    }
+}
+
+
+
+
+

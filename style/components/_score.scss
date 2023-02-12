@@ -1,0 +1,25 @@
+@use "../abstracts/variables" as var;
+@use "../abstracts/mixin" as mixin;
+
+.total-score-left, .total-score-rigth {
+    padding: 20%;
+    border: 2px solid var.$white;
+    border-left: none;
+    border-right: none;
+
+    @include mixin.media-min-width(650px) {
+        padding: 5%;
+    }
+}
+
+.column-score {
+    height: 10%;
+}
+
+#scoreMenu {
+    font-size: 100% !important;
+    width: 35%;
+    bottom: 41%;
+    left: 50%;
+    transform: translate(-50%, 0);
+}

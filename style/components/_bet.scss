@@ -1,0 +1,74 @@
+@use "../abstracts/mixin" as mixin;
+@use "../core/position";
+
+#bet-form {
+    max-width: 1000px;
+    margin: 0 auto;
+
+    label {
+        margin: 3%;
+    }
+
+    p {
+        display: none;
+        height: auto;
+        
+        @include mixin.media-min-height(250px) {
+            display: block;
+            margin: 2%;
+        }
+    }
+
+    input {
+        border: none;
+        border-radius: 5px;
+        width: 50%;
+        height: 5vh;
+        max-width: 150px;
+        min-height: 25px;
+        max-height: 80px;
+    }
+}
+
+#bet-form form::after {
+    @extend .pos-abs;
+    content: " ";
+    z-index: -1;
+    top: 0;
+    width: 102%;
+    height: 150%;
+    background-image: url("https://ik.imagekit.io/mbo2hq52r/assets/panneau_LGjpWJXsaE.png?ik-sdk-version=javascript-1.4.3&updatedAt=1664289319273");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    
+    @include mixin.media-min-max-height(250px, 349px) {
+            height: 130%;
+    }
+    
+    @include mixin.media-min-height(350px) {
+        top: -30%;
+        height: 160%;
+    }
+    
+    @include mixin.media-min-width(350px) {
+        background-size: contain;
+    }
+}
+
+#lore-bet {
+    display: none;
+    min-width: 70px;
+    
+    @include mixin.media-min-height(350px) {
+        display: block;
+        width: 15%;
+        margin: 0 auto;
+    }
+}
+
+#validate-bet {
+    width: 20%;
+    /* min-width: 100%; */
+    margin: 0 auto;
+}

@@ -1,0 +1,159 @@
+@use "../abstracts/variables" as var;
+@use "../abstracts/mixin" as mixin;
+
+#shop {
+    position: absolute;
+    top: 80px;
+
+    @include mixin.media-max-height(501px) {
+        top: 50px;
+    }
+}
+
+#shop-container {
+    @include mixin.media-min-width(601px) {
+        width: 100%;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-around;
+        align-items: center;
+    }
+}
+
+#description {
+    background-color:rgba(14,14,14,0.2) ;
+    width: 80%;
+    text-align: center;
+
+    @include mixin.media-min-width(601px) {
+        width: 100%;
+        padding: 8%;
+    }
+}
+
+#item {
+    width: 100%;
+    display: flex;
+
+    h1 {
+        color: #5c0408;
+    }
+
+    h2 {
+        margin-top: 10px;
+        color: #a97406;
+    }
+
+    @include mixin.media-min-width(601px) {
+        width: 30%;
+        max-width: 300px;
+        height: 50vh;
+        flex-direction: column;
+    }
+}
+
+#image {
+    background-color: #141414;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 25%;
+
+    @include mixin.media-min-width(601px) {
+        width: 100%;
+        height: 60%;
+    }
+
+    @include mixin.media-max-height(350px) {
+        height: 0px;
+    }
+}
+
+#margin {
+    @include mixin.media-min-width(601px) {
+        width: 35vw;
+    }
+
+    @include mixin.media-max-width(600px) {
+        display: none;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
+#panel {
+    overflow: scroll;
+    height: 75vh;
+
+    @include mixin.media-max-height(725px) {
+        height: 70vh;
+    }
+}
+ 
+.panel-items {
+    button {
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-color: #141414;
+        border-width: 3px;
+        border-color: #999;
+    }
+
+    p {
+        font-size: 3vw;
+        color: #a97406;
+        margin-bottom: 0;
+    }
+
+    h1 {
+        color: #5c0408;
+        margin-bottom: 10px;
+    }
+
+    @include mixin.media-min-width(601px) {
+        padding-top: 30px;
+        width: 46vw;
+
+        h1 {
+            font-size: 3vw;
+        }
+
+        button {
+            width: 15vw;
+            height: 15vw;
+        }
+    }
+
+    @include mixin.media-max-width(600px) {
+        h1 {
+            font-size: 5vw;
+        }
+
+        button {
+            width: 25vw;
+            height: 25vw;
+        }
+    }
+}
+
+#footer {
+    text-align: center;
+    width: 100%;
+    background-color: #5c0408;
+    left: 0;
+    position: fixed;
+    bottom: 0;
+    min-height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+        border-radius: 4px;
+        border-color: #141414;
+        background-color: #a97406;
+    }
+}

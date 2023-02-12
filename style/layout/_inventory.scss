@@ -1,0 +1,49 @@
+@use "../abstracts/mixin" as mixin;
+@use "../abstracts/variables" as var;
+
+#inventory-menu {
+    width: calc(100% - 4px);
+    background: var.$inventory-bg;
+    border: 2px solid var.$orange;
+    overflow: auto;
+
+    @include mixin.media-min-width(650px) {
+        width: 70%;
+        min-width: 650px;
+        max-width: 1200px;
+    }
+
+    h1 {
+        display: inline-block;
+        width: 20%;
+        min-width: 110px;
+        border-bottom: 1px solid var.$white;
+        padding: 0 0 1% 0;
+        margin-left: 2%;
+    }
+
+    #inventory-msg {
+        padding: 10% 0;
+
+        @include mixin.media-min-width(650px) {
+            padding: 5% 0;
+        }
+    }
+    
+    #inventory-close {
+        width: 8%;
+        min-width: 40px;
+    }
+
+    li {
+        padding: 2% 0 2% 0;
+
+        h3 {
+            padding: 5% 0 5% 0;
+        }
+    }
+}
+
+.bg-hover-orange:hover {
+    background-color: var.$orange;
+}

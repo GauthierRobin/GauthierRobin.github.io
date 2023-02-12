@@ -1,0 +1,48 @@
+@use "../abstracts/variables" as var;
+@use "../core/flex";
+@use "../core/text";
+@use "../core/position";
+
+.shop-cart {
+    @extend .f-wrap;
+    margin: 4% 0;
+    max-width: 250px;
+    
+    button {
+        @extend .txt-center;
+        width: 90%;
+        border-radius: 10px;
+
+        &:hover {
+            background-color: var.$orange;
+        }
+
+        &:focus {
+            background-color: var.$dark-red;
+        }
+    }
+
+    #description {
+        padding: 10% 0;
+    }
+
+    #item-img {
+        div {
+            width: 99%;
+            border: 2px solid var.$or;
+            background-color: var.$black;
+        }
+    
+        p {
+            @extend .pos-abs, .txt-center;
+            bottom: -0.5vh;
+            right: -0.5vw;
+            border-radius: 50%;
+            border: 2px solid var.$or;
+            background-color: var.$black;
+        }
+    }
+}
+
+
+

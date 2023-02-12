@@ -1,0 +1,18 @@
+@use "../abstracts/mixin" as mixin;
+
+#parchemin {
+    width: 95%;
+    font-size: 3vw;
+
+    @include mixin.media-min-width(800px) {
+        width: 50%;
+        font-size: 2vw;
+    }
+
+    #end-menu-quit {
+        width: 15%;
+        bottom: -5%;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+}

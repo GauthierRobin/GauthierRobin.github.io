@@ -1,0 +1,16 @@
+.vibrate {
+    animation: fire 2.5s infinite;
+}
+
+@keyframes fire {
+    50% {
+        box-shadow:
+            inset 0 0 20px #fefcc9,
+            0 0 4px #fefcc9,
+            0 0 5px #feec85,
+            0 0 7px #ffae34,
+            0 0 8px #cd4606,
+            0 0 10px #973716,
+            0 0 20px #ec760c;
+    }
+}

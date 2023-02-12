@@ -1,0 +1,17 @@
+@use "../abstracts/mixin" as mixin;
+@use "../core/width";
+
+#grids {
+    height: 70%;
+    width: 100%;
+
+    @include mixin.media-min-width(650px) {
+        height: 100%;
+    }
+}
+
+.player-grid {
+    @extend .w-mx-100;
+    aspect-ratio: 1/1;
+    height: 85%;
+}

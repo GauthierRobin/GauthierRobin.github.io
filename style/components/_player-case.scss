@@ -1,0 +1,23 @@
+@use "../abstracts/variables" as var;
+@use "./button";
+@use "../core/position";
+
+.case-container {
+    width: 90%;
+}
+
+.case {
+    @extend .btn, .pos-rel;
+    aspect-ratio: 1/1;
+    border: solid 0.3rem var.$dark-red;
+    border-radius: 15%;
+    margin: 10% 0;
+
+    img {
+        @extend .pos-abs;
+        margin: 7%;
+        width: 85%;
+        height: auto;
+        border-radius: 15%;
+    }
+}

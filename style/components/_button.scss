@@ -1,0 +1,73 @@
+@use "../abstracts/_mixin" as mixin;
+@use "../abstracts/variables" as var;
+@use "../core/position";
+
+.btn {
+    cursor: pointer;
+}
+
+.btn-transparent {
+    @extend .btn;
+    background-color: transparent;
+    border: none;
+}
+
+#btn-rules {
+    @extend .btn-transparent, .top-0, .rigth-0;
+    width: 15%;
+    min-width: 70px;
+    max-width: 180px;
+}
+
+#inventory-btn {
+    @extend .btn-transparent, .rigth-0;
+    width: 20%;
+    max-width: 80px;
+    min-width: 50px;
+    bottom: 15%;
+
+    @include mixin.media-min-width(650px) {
+        width: 14%;
+        max-width: 180px;
+        left: 12%;
+        bottom: 20%;
+    }
+    
+    &::before {
+        @extend .pos-abs;
+        content: "";
+        z-index: -1;
+        width: 50%;
+        height: 50%;
+        bottom: 15%;
+        left: 15%;
+        border-radius: 50%;
+        animation: test 2s infinite;
+    }
+}
+
+@keyframes test {
+    0% {
+        box-shadow: 0px 0px 80px 0px #bfa500, 0px 0px 40px 0px #ff882d;
+    }
+    50% {
+        box-shadow: 0px 0px 80px 0px #bfa500, 0px 0px 33px 0px #ff6f00;
+    }
+    100% {
+        box-shadow: 0px 0px 80px 0px #bfa500, 0px 0px 40px 0px #ff882d;
+    }
+}
+
+#returnToTheGame {
+    @extend .btn-transparent;
+    width: 25%;
+    bottom: 15%;
+    left: 14%;
+}
+
+#quitGame {
+    @extend .btn-transparent, .bottom-0, .left-0;
+    width: 15%;
+    min-width: 40px;
+    max-width: 90px;
+}

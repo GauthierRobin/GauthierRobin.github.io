@@ -1,0 +1,6 @@
+@use "../core/width";
+
+.page-menu {
+    @extend .w-100;
+    height: 90%;
+}

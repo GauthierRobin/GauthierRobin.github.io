@@ -1,0 +1,18 @@
+@use "../abstracts/mixin" as mixin;
+@use "../core/flex";
+@use "../core/width";
+@use "../core/height";
+
+#mode-menu-container {
+    @extend .f-jc-center, .f-row, .f-ai-end, .w-100, .h-100;
+}
+
+#mode-menu {
+    width: 80%;
+    margin-bottom: 2%;
+
+    @include mixin.media-min-width(350px) {
+        width: 40%;
+        max-width: 300px;
+    }
+}

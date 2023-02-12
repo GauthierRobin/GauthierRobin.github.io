@@ -1,0 +1,13 @@
+@use "../core/width";
+@use "../core/height";
+
+.img-res {
+    @extend .w-100, .h-mx-100;
+    height: auto;
+}
+
+.img-fit {
+    @extend .w-100, .h-100;
+    object-fit: cover;
+    object-position: center;
+}

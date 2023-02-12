@@ -1,0 +1,11 @@
+@use "../abstracts/variables" as var;
+@use "../core/flex";
+
+#brand {
+    @extend .f-column-center;
+    margin-left: 2%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    color: var.$orange;
+}

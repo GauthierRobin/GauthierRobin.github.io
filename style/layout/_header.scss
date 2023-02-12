@@ -1,0 +1,11 @@
+@use "../abstracts/variables" as var;
+@use "../core/display";
+@use "../core/flex";
+
+header {
+    @extend .hide;
+    background-color: var.$dark-red;
+    height: 10%;
+    min-height: 50px;
+    max-height: 70px;
+}

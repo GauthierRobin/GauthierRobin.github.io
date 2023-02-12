@@ -1,0 +1,23 @@
+@use "../abstracts/variables" as var;
+
+.clignote {
+    background-color: transparent;
+    box-shadow: 0 0 100px var.$black;
+    animation: clignote 2s linear;
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes clignote {
+    50% {
+        opacity: 0;
+    }
+}
