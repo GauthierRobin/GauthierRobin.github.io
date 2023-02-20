@@ -114,3 +114,10 @@ $('.player-info').on('click', () => {
     $("#shop").fadeOut(400)
 })
 //////////////////////////////////////////////////////////////
+
+$("#logout").on("click", () => {
+    localStorage.clear()
+    login.showConnectAndHideMenu()
+    $("#shop").fadeOut(400)
+    $("#leaderboard").fadeOut(400)
+})

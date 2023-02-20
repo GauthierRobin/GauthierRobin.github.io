@@ -63,15 +63,6 @@ export class Shop {
     }
 
     HandlePurchaseWithBasicCoin() {
-        const xhrOptions = {
-            headers: {
-                'Content-type': 'application/json; charset=utf-8',
-                "x-xsrf-token": localStorage.getItem("xsrfToken")
-            },
-            mode: "cors",
-            dataType: "json"
-        }
-
         $(`#purchase`).on("click", () => {
             const btnVal = parseInt($("#item").attr('class'))
             if (btnVal >= 3 && btnVal <= 5) {
@@ -91,7 +82,6 @@ export class Shop {
                 productId: productId
             },
             dataType: "json",
-
         }
 
         getApiData(url_basicPurchase, xhrOptions, (status, res) => {
