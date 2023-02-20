@@ -131,11 +131,18 @@ export class Client {
     receiveMyGrid() {
         this.socket.on("update my grid", (p1GridInfos) => {
             this.game.sound.play('diceSound', 0.1)
-            $(`#potPlayer${this.game.player1.id}`).attr("src", "https://ik.imagekit.io/iq52ivedsj/assets/dices/choseDice_ftS4YvZbV.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986918825")
-            const diceCaseImg = $(`#player${this.game.player1.id}-col${p1GridInfos.columnId}-case-${p1GridInfos.nbCase} img`)
+            $(`#potPlayer${this.game.player1.id}`)
+                .attr(
+                    "src",
+                    "https://ik.imagekit.io/iq52ivedsj/assets/dices/choseDice_ftS4YvZbV.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986918825"
+                )
 
+            const diceCaseImg = $(`#player${this.game.player1.id}-col${p1GridInfos.columnId}-case-${p1GridInfos.nbCase} img`)
             diceCaseImg.attr("data-value", p1GridInfos.caseValue)
-            diceCaseImg.attr("src", `https://ik.imagekit.io/iq52ivedsj/assets/dices/Dice${p1GridInfos.caseValue}.png?ik-sdk-version=javascript-1.4.3`)
+            diceCaseImg.attr(
+                "src",
+                `https://ik.imagekit.io/iq52ivedsj/assets/dices/Dice${p1GridInfos.caseValue}.png?ik-sdk-version=javascript-1.4.3`
+            )
 
             this.game.player1.refreshScoreColumn(p1GridInfos.columnId)
             this.game.player1.refreshTotalScore()

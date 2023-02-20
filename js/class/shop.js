@@ -5,11 +5,13 @@ import { getApiData } from "../utils/xhr.js"
 export class Shop {
     constructor() {
         this.loginController = new Login()
-        this.recoverDataPlayer()
-        this.HandlePurchaseWithBasicCoin()
+        // this.recoverDataPlayer()
+        // this.HandlePurchaseWithBasicCoin()
     }
 
     showShop() {
+        this.recoverDataPlayer()
+        this.HandlePurchaseWithBasicCoin()
         const section = ['gold', 'skin', 'icon', 'emot', 'bonus']
         section.forEach(element => {
             this.recoverData(element)
@@ -141,18 +143,6 @@ export class Shop {
                     break;
             }
         })
-        // $.ajax({
-        //     type: "POST",
-        //     url: url_playerInfos,
-        //     data: {
-        //         pseudo: localStorage.getItem("pseudo"),
-        //         password: localStorage.getItem("password"),
-        //     },
-        //     dataType: "json",
-        //     success: function (response) {
-        //         $(`#purchase`).html(`${this.convert(response.basicCoin)}`)
-        //     }.bind(this)
-        // })
     }
 
     convert(number) {

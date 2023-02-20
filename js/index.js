@@ -41,16 +41,18 @@ login.init()
 const leaderBoard = new Leaderboard()
 leaderBoard.init()
 
-const shop = new Shop()
-shop.showShop()
 
 const game = new Game()
-game.init()
+let initGame = false
 
 $('#redirectionSolo').on('click', () => {
     const pseudo = localStorage.getItem("pseudo")
     const token = localStorage.getItem("xsrfToken")
     if (pseudo !== null && token !== null) {
+        if (!initGame) {
+            game.init()
+            initGame = !initGame
+        }
         game.play("solo")
     } else {
         login.showConnectAndHideMenu()
@@ -62,6 +64,10 @@ $('#redirectionMulti').on('click', () => {
     const pseudo = localStorage.getItem("pseudo")
     const token = localStorage.getItem("xsrfToken")
     if (pseudo !== null && token !== null) {
+        if (!initGame) {
+            game.init()
+            initGame = !initGame
+        }
         game.play("multi")
     } else {
         login.showConnectAndHideMenu()
@@ -78,7 +84,14 @@ $(".menu-principal-btn").on("click", () => {
     $("#profile").fadeOut(400)
 })
 
+const shop = new Shop()
+let shopShowed = false
+
 $(".shop-btn").on("click", () => {
+    if (!shopShowed) {
+        shop.showShop()
+        shopShowed = !shopShowed
+    }
     $('#backg').attr('src', 'https://ik.imagekit.io/mbo2hq52r/assets/wallpaper_JTNJAeMQJ.png?ik-sdk-version=javascript-1.4.3&updatedAt=1664045675697');
     $("#menu-principal").fadeOut(400)
     $("#leaderboard").fadeOut(400)
