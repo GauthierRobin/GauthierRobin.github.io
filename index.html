@@ -1,498 +1,456 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-<head>
-	<meta charset="UTF-8">
-	<link rel="icon" href="assets/pieces.ico" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="style/style.css" />
-	<script src="https://kit.fontawesome.com/b7c84a7a15.js" crossorigin="anonymous"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="https://unpkg.com/socket.io-client@4.5.0/dist/socket.io.min.js"></script>
-	<script defer type="module" src="js/index.js"></script>
-	<title>The Pirate's Dice</title>
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="icon" href="assets/pieces.ico"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="style/style.css"/>
+		<script src="https://kit.fontawesome.com/b7c84a7a15.js" crossorigin="anonymous"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script src="https://unpkg.com/socket.io-client@4.5.0/dist/socket.io.min.js"></script>
+		<script defer type="module" src="js/index.js"></script>
+		<title>The Pirate's Dice</title>
+	</head>
 
-<body>
-	<div id="wrapper">
-		<main>
-			<div id="index">
-				<header>
-					<div id="nav-bar">
-						<h1 id="brand">THE PIRATE'S DICES</h1>
-						<div id="hamburger-icon" onclick="toggleMobileMenu(this)">
-							<div class="bar1"></div>
-							<div class="bar2"></div>
-							<div class="bar3"></div>
+	<body>
+		<div id="wrapper">
+			<main>
+				<div id="index">
+					<header>
+						<div id="nav-bar">
+							<h1 id="brand">THE PIRATE'S DICES</h1>
+							<div id="hamburger-icon" onclick="toggleMobileMenu(this)">
+								<div class="bar1"></div>
+								<div class="bar2"></div>
+								<div class="bar3"></div>
+							</div>
+							<nav>
+								<button class="menu-principal-btn" type="button">MENU</button>
+								<button class="leaderboard-btn" type="button">CLASSEMENT</button>
+								<button class="shop-btn" type="button">BOUTIQUE</button>
+								<button id="logout" type="button">QUITTER</button>
+							</nav>
 						</div>
-						<nav>
-							<button class="menu-principal-btn" type="button">MENU PRINCIPAL</button>
-							<button class="leaderboard-btn" type="button">CLASSEMENT</button>
-							<button class="shop-btn" type="button">BOUTIQUE</button>
-						</nav>
+					</header>
+
+					<div id="index-bg" class="w-100 h-100 pos-rel">
+						<img id="backg" class="img-fit pos-abs z-index--1" src="" alt="">
 					</div>
-				</header>
 
-				<div id="index-bg" class="w-100 h-100 pos-rel">
-					<img id="backg" class="img-fit pos-abs z-index--1" src="" alt="">
-				</div>
+					<section id="login-menu" class="h-100 w-100 pos-abs bottom-0 hide">
+						<div id="form-container" class="f-row f-center h-100">
+							<div id="signup" class="form h-mx-100 hide">
+								<h1 class="txt-center">S'inscrire</h1>
+								<p id="signup-error" class="txt-center color-err"></p>
+								<form id="signup-form" action="#">
+									<div class="f-column w-100">
+										<div class="f-row pos-rel form-control">
+											<label class="txt-center" for="mail">Mail</label>
+											<input class="f-grow-1" type="email" name="email" required>
+										</div>
+										<div class="f-row pos-rel form-control">
+											<label class="txt-center" for="pseudo">Pseudo</label>
+											<input class="f-grow-1" type="text" name="pseudo" required>
+										</div>
+										<div class="f-row pos-rel form-control">
+											<label class="txt-center" for="password">Password</label>
+											<input class="f-grow-1" type="password" name="password" required>
+										</div>
+									</div>
 
-				<section id="login-menu" class="h-100 w-100 pos-abs bottom-0 hide">
-					<div id="form-container" class="f-row f-center h-100">
-						<div id="signup" class="form h-mx-100 hide">
-							<h1 class="txt-center">S'inscrire</h1>
-							<p id="signup-error" class="txt-center color-err"></p>
-							<form id="signup-form" action="#">
-								<div class="f-column w-100">
-									<div class="f-row pos-rel form-control">
-										<label class="txt-center" for="mail">Mail</label>
-										<input class="f-grow-1" type="email" name="email" required>
+									<div class="f-row f-jc-sp-bw f-ai-center connect-container-btn">
+										<button class="form-btn" id="return-to-connect" type="button">se connecter</button>
+										<button type="button" id="signup-submit" class="submit-btn">
+											<i class="fa-solid fa-check fa-xl"></i>
+										</button>
 									</div>
-									<div class="f-row pos-rel form-control">
-										<label class="txt-center" for="pseudo">Pseudo</label>
-										<input class="f-grow-1" type="text" name="pseudo" required>
-									</div>
-									<div class="f-row pos-rel form-control">
-										<label class="txt-center" for="password">Password</label>
-										<input class="f-grow-1" type="password" name="password" required>
-									</div>
-								</div>
+								</form>
+							</div>
 
-								<div class="f-row f-jc-sp-bw f-ai-center connect-container-btn">
-									<button class="form-btn" id="return-to-connect" type="button">se connecter</button>
-									<button type="button" id="signup-submit" class="submit-btn">
-										<i class="fa-solid fa-check fa-xl"></i>
+							<div id="signin" class="form h-mx-100">
+								<h1 class="txt-center">Se connecter</h1>
+								<p id="signin-error" class="txt-center color-err"></p>
+								<form id="signin-form" action="#">
+									<div class="f-column w-100">
+										<div class="f-row pos-rel form-control">
+											<label class="txt-center" for="pseudo">Pseudo</label>
+											<input class="f-grow-1" type="text" name="pseudo" required>
+										</div>
+										<div class="f-row pos-rel form-control">
+											<label class="txt-center" for="password">Password</label>
+											<input class="f-grow-1" type="password" name="password" required>
+										</div>
+									</div>
+
+									<div class="f-row f-jc-sp-bw f-ai-center connect-container-btn">
+										<button class="form-btn" type="button" id="new-user-btn">Je n'ai pas de
+																																											compte</button>
+										<button type="button" id="signin-submit" class="submit-btn">
+											<i class="fa-solid fa-check fa-xl"></i>
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</section>
+
+					<section id="menu-principal" class="page-menu pos-abs bottom-0 hide">
+						<div
+							class="w-100 h-100 f-column f-jc-sp-bw">
+							<!-- <h1 id="id-player" class="txt-center"></h1> -->
+							<div id="mode-menu-container">
+								<div id="mode-menu" class="f-column">
+									<button id="redirectionSolo" class="btn btn-transparent w-100">
+										<img class="img-res" src="https://ik.imagekit.io/iq52ivedsj/assets/solo_WHb3hxECH.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986941093" alt="">
+									</button>
+									<button id="redirectionMulti" class="btn btn-transparent w-100">
+										<img class="img-res" src="https://ik.imagekit.io/iq52ivedsj/assets/multi_G6S-smL65z.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986940676" alt="">
 									</button>
 								</div>
-							</form>
+							</div>
 						</div>
+					</section>
 
-						<div id="signin" class="form h-mx-100">
-							<h1 class="txt-center">Se connecter</h1>
-							<p id="signin-error" class="txt-center color-err"></p>
-							<form id="signin-form" action="#">
-								<div class="f-column w-100">
-									<div class="f-row pos-rel form-control">
-										<label class="txt-center" for="pseudo">Pseudo</label>
-										<input class="f-grow-1" type="text" name="pseudo" required>
-									</div>
-									<div class="f-row pos-rel form-control">
-										<label class="txt-center" for="password">Password</label>
-										<input class="f-grow-1" type="password" name="password" required>
-									</div>
+					<section id="leaderboard" class="page-menu pos-abs bottom-0 hide">
+						<div class="container">
+							<ul class="responsive-table"></ul>
+						</div>
+					</section>
+
+					<section id="shop" class="page-menu hide">
+						<div id="shop-container">
+							<div id="item">
+								<div id="image"></div>
+								<!-- <div id="margin"></div> -->
+								<div id="description">
+									<h1></h1>
+									<p></p>
+									<h2></h2>
 								</div>
+							</div>
+							<div id="panel">
+								<div id="bonus" class="panel-items">
+									<h1>Bonus</h1>
+								</div>
+								<!-- <div id="emot"><h1>Emoticone</h1></div> -->
+								<div id="icon" class="panel-items">
+									<h1>Icone</h1>
+								</div>
+								<div id="skin" class="panel-items">
+									<h1>Skin</h1>
+								</div>
+								<div id="gold" class="panel-items">
+									<h1>Or</h1>
+								</div>
+							</div>
+						</div>
+						<div id="footer">
+							<button id="purchase">Acheter</button>
+						</div>
+					</section>
+				</div>
 
-								<div class="f-row f-jc-sp-bw f-ai-center connect-container-btn">
-									<button class="form-btn" type="button" id="new-user-btn">Je n'ai pas de
-										compte</button>
-									<button type="button" id="signin-submit" class="submit-btn">
-										<i class="fa-solid fa-check fa-xl"></i>
+				<section id="game" class="w-100 h-100 pos-rel hide">
+					<img id="fond" class="img-fit pos-abs z-index--1" src="https://ik.imagekit.io/iq52ivedsj/assets/fond_On7kzCaht.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662987059086" alt="">
+					<img id="nappe" class="img-fit pos-abs z-index--1" src="https://ik.imagekit.io/iq52ivedsj/assets/nappe_dxy4e_8vX.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986991309" alt="">
+					<img id="cadre" class="img-fit pos-abs z-index--1" src="https://ik.imagekit.io/iq52ivedsj/assets/cadre_loHnyB1zn.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986959680" alt="">
+
+					<div id="bet" class="w-100 h-100 h-mx-100 dark-bg pos-abs z-index-1">
+						<div id="bet-form" class="w-100 h-100 f-column-center">
+							<div id="lore-bet" class="">
+								<img class="img-res" src="https://ik.imagekit.io/mbo2hq52r/assets/coffre_UVq0oNMjyM.png?ik-sdk-version=javascript-1.4.3&updatedAt=1664289319055" alt="">
+							</div>
+
+							<form action="#" class="w-100 f-column-center color-white pos-rel">
+								<label for="bet-value">
+									Mise des points
+								</label>
+
+								<input class="color-white txt-center dark-bg" type="number" name="bet-value" value="0">
+
+								<p>
+									Double la mise en cas de victoire<br/>
+									Perte des points en cas de défaite
+								</p>
+
+								<div></div>
+							</form>
+
+							<div id="validate-bet">
+								<button class="btn btn-transparent" type="button">
+									<img class="img-res" src="https://ik.imagekit.io/iq52ivedsj/assets/pieces_jo4ovO8J0.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986935971" alt="">
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<button id="btn-rules" class="btn btn-transparent pos-abs">
+						<img class="img-res" src="https://ik.imagekit.io/mbo2hq52r/assets/rules-btn_lTjyz6OqX.png?ik-sdk-version=javascript-1.4.3&updatedAt=1664205133511" alt=""/>
+					</button>
+
+					<button id="inventory-btn" class="btn btn-transparent pos-abs">
+						<img class="img-res" src="https://ik.imagekit.io/mbo2hq52r/assets/coffre_UVq0oNMjyM.png?ik-sdk-version=javascript-1.4.3&updatedAt=1664289319055" alt="">
+					</button>
+
+					<button id="quitGame" class="btn btn-transparent pos-abs">
+						<img class="img-res" src="https://ik.imagekit.io/iq52ivedsj/assets/quitBtn_X1x10G28x.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986933210" alt="">
+					</button>
+
+					<div id="rule" class="h-100 w-100 pos-abs z-index-1 hide">
+						<div id="rule-container" class="w-100 h-100 pos-abs f-column-center">
+							<div class="h-mx-100 f-column-center">
+								<div class="h-mx-100 pos-rel">
+									<img id="rulesImg" class="img-res" src="https://ik.imagekit.io/mbo2hq52r/assets/rules_NLqLrnKmS.png?ik-sdk-version=javascript-1.4.3&updatedAt=1664990362873" alt=""/>
+									<button id="returnToTheGame" class="btn btn-transparent pos-abs">
+										<img class="img-res" src="https://ik.imagekit.io/iq52ivedsj/assets/returnToTheGame_vd6nEsgBE.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986935888" alt=""/>
 									</button>
 								</div>
-							</form>
+							</div>
 						</div>
+					</div>
+
+					<div id="inventory" class="h-100 w-100 pos-abs dark-bg z-index-1 hide">
+						<div id="inventory-container" class="w-100 h-100 pos-abs f-column-center z-index-1">
+							<div id="inventory-menu" class="pos-rel color-white h-100">
+								<div id="inventory-items" class="f-column">
+									<h1>BONUS</h1>
+									<p id="inventory-msg" class="w-100 txt-center"></p>
+									<ul class="f-row-center f-wrap"></ul>
+								</div>
+								<div id="inventory-close" class="pos-abs top-0 rigth-0">
+									<img class="img-res" src="https://ik.imagekit.io/iq52ivedsj/assets/quitBtn_X1x10G28x.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986933210" alt="">
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="end-menu" class="h-100 w-100 pos-abs dark-bg z-index-1 hide">
+						<div class="w-100 h-100 f-column-center">
+							<div id="parchemin" class="pos-rel h-mx-100">
+								<img id="scoreImg" class="img-res" src="https://ik.imagekit.io/iq52ivedsj/assets/score_tfEPzX4ZR.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662987039605" alt="">
+								<p id="scoreMenu" class="pos-abs txt-center">0 - 0</p>
+								<div id="end-menu-quit" class="pos-abs">
+									<img id="quitBtn" class="img-res" src="https://ik.imagekit.io/iq52ivedsj/assets/quitBtn_X1x10G28x.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986933210" alt="">
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="player-ui" class="f-row-center w-100 h-100">
+
+						<div id="ui-haut">
+							<div class="pos-rel f-column-center">
+								<img class="img-res" src="https://ik.imagekit.io/iq52ivedsj/assets/rollhaut_i40Hx7Lzp.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986947340" alt="">
+								<div class="pos-abs w-35">
+									<img id="potPlayer2" class="choice-dice img-res" src="https://ik.imagekit.io/iq52ivedsj/assets/dices/choseDice_ftS4YvZbV.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986918825" alt="">
+								</div>
+							</div>
+
+							<div id="roll-haut" class="f-row-center">
+								<p id="totalScore2" class="total-score-left color-white">0</p>
+								<p id="namePlayer2" class="pseudo-left color-white">player2</p>
+							</div>
+						</div>
+
+						<div id="grids" class="f-column-center w-100">
+
+							<div id="grille2" class="f-column-center f-grow-1 w-100 h-50">
+								<div class="f-row-center player-grid h-100">
+									<div class="w-30 h-100">
+										<div id="player2-col1" class="f-column-center h-100">
+											<div class="case-container">
+												<div id="player2-col1-case-3" class="case f-column-center">
+													<img class="" src="#" alt="" data-value="null" data-case="2">
+												</div>
+
+												<div id="player2-col1-case-2" class="case f-column-center">
+													<img class="" src="#" alt="" data-value="null" data-case="1">
+												</div>
+
+												<div id="player2-col1-case-1" class="case f-column-center">
+													<img class="" src="#" alt="" data-value="null" data-case="0">
+												</div>
+											</div>
+
+											<div id="totalScore2Column1" class="column-score f-column-center color-white">
+												<p></p>
+											</div>
+										</div>
+									</div>
+
+									<div class="w-30 h-100">
+										<div id="player2-col2" class="f-column-center h-100">
+											<div class="case-container">
+												<div id="player2-col2-case-3" class="case f-column-center">
+													<img class="" src="#" alt="" data-value="null" data-case="5">
+												</div>
+
+												<div id="player2-col2-case-2" class="case f-column-center">
+													<img class="" src="#" alt="" data-value="null" data-case="4">
+												</div>
+
+												<div id="player2-col2-case-1" class="case f-column-center">
+													<img class="" src="#" alt="" data-value="null" data-case="3">
+												</div>
+											</div>
+
+											<div id="totalScore2Column2" class="column-score f-column-center color-white">
+												<p></p>
+											</div>
+										</div>
+
+									</div>
+
+									<div class="w-30 h-100">
+										<div id="player2-col3" class="f-column-center h-100">
+											<div class="case-container">
+												<div id="player2-col3-case-3" class="case f-column-center">
+													<img class="" src="#" alt="" data-value="null" data-case="8">
+												</div>
+
+												<div id="player2-col3-case-2" class="case f-column-center">
+													<img class="" src="#" alt="" data-value="null" data-case="7">
+												</div>
+
+												<div id="player2-col3-case-1" class="case f-column-center">
+													<img class="" src="#" alt="" data-value="null" data-case="6">
+												</div>
+											</div>
+
+											<div id="totalScore2Column3" class="column-score f-column-center color-white">
+												<p></p>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+							<div id="grille1" class="f-column-center f-grow-1 w-100 h-50">
+								<div class="f-row-center player-grid h-100">
+									<div class="w-30 h-100">
+
+										<div id="player1-col1" class="f-column-center h-100">
+											<div id="totalScore1Column1" class="column-score f-column-center color-white">
+												<p></p>
+											</div>
+
+											<div class="case-container">
+												<div id="player1-col1-case-1" class="case f-column-center">
+													<img class="" src="#" alt="" data-value="null" data-case="0">
+												</div>
+
+												<div id="player1-col1-case-2" class="case f-column-center">
+													<img class="" src="#" alt="" data-value="null" data-case="1">
+												</div>
+
+												<div id="player1-col1-case-3" class="case f-column-center">
+													<img class="" src="#" alt="" data-value="null" data-case="2">
+												</div>
+											</div>
+										</div>
+
+									</div>
+
+									<div class="w-30 h-100">
+										<div id="player1-col2" class="f-column-center h-100">
+											<div id="totalScore1Column2" class="column-score f-column-center color-white">
+												<p></p>
+											</div>
+
+											<div class="case-container">
+												<div id="player1-col2-case-1" class="case f-column-center">
+													<img class="" src="#" alt="" data-value="null" data-case="3">
+												</div>
+
+												<div id="player1-col2-case-2" class="case f-column-center">
+													<img class="" src="#" alt="" data-value="null" data-case="4">
+												</div>
+
+												<div id="player1-col2-case-3" class="case f-column-center">
+													<img class="" src="#" alt="" data-value="null" data-case="5">
+												</div>
+											</div>
+
+										</div>
+
+									</div>
+
+									<div class="w-30 h-100">
+										<div id="player1-col3" class="f-column-center h-100">
+											<div id="totalScore1Column3" class="column-score f-column-center color-white">
+												<p></p>
+											</div>
+
+											<div class="case-container">
+												<div id="player1-col3-case-1" class="case f-column-center">
+													<img class="" src="#" alt="" data-value="null" data-case="6">
+												</div>
+
+												<div id="player1-col3-case-2" class="case f-column-center">
+													<img class="" src="#" alt="" data-value="null" data-case="7">
+												</div>
+
+												<div id="player1-col3-case-3" class="case f-column-center">
+													<img class="" src="#" alt="" data-value="null" data-case="8">
+												</div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+						<div id="ui-bas">
+							<div id="roll-bas" class="f-row-center">
+								<p id="namePlayer1" class="pseudo-rigth color-white">player1</p>
+								<p id="totalScore1" class="total-score-rigth color-white">0</p>
+							</div>
+							<div class="pos-rel f-column-center">
+								<img class="img-res" src="https://ik.imagekit.io/iq52ivedsj/assets/rollbas_IgcEs8UX-.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986946600" alt="">
+								<div class="pos-abs w-35">
+									<img id="potPlayer1" class="choice-dice img-res" src="https://ik.imagekit.io/iq52ivedsj/assets/dices/choseDice_ftS4YvZbV.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986918825" alt="">
+								</div>
+							</div>
+						</div>
+
 					</div>
 				</section>
+			</main>
 
-				<section id="menu-principal" class="page-menu pos-abs bottom-0 hide">
-					<div class="w-100 h-100 f-column f-jc-sp-bw">
-						<!-- <h1 id="id-player" class="txt-center"></h1> -->
-						<div id="mode-menu-container">
-							<div id="mode-menu" class="f-column">
-								<button id="redirectionSolo" class="btn btn-transparent w-100">
-									<img class="img-res"
-										src="https://ik.imagekit.io/iq52ivedsj/assets/solo_WHb3hxECH.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986941093"
-										alt="">
-								</button>
-								<button id="redirectionMulti" class="btn btn-transparent w-100">
-									<img class="img-res"
-										src="https://ik.imagekit.io/iq52ivedsj/assets/multi_G6S-smL65z.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986940676"
-										alt="">
-								</button>
-							</div>
-						</div>
-					</div>
-				</section>
+			<footer>
+				<audio id="beginSong" src="assets/soundsEffect/begin.mp3"></audio>
+				<audio id="boom" src="assets/soundsEffect/boom.mp3"></audio>
+				<audio id="SeaSound" src="assets/soundsEffect/SeaSound.mp3" autoplay="true"></audio>
+				<audio id="bgAudio" src="assets/soundsEffect/bgSound.mp3" autoplay="true"></audio>
+				<audio id="dropCoin" src="assets/soundsEffect/dropCoin.mp3"></audio>
+				<audio id="closeRulesBook" src="assets/soundsEffect/closeRulesBook.mp3"></audio>
+				<audio id="rulesBookSound" src="assets/soundsEffect/rulesBookSound.mp3"></audio>
+				<audio id="diceSound" src="assets/soundsEffect/diceDrop.mp3"></audio>
+				<audio id="aiSoundDice" src="assets/soundsEffect/diceDrop.mp3"></audio>
 
-				<section id="leaderboard" class="page-menu pos-abs bottom-0 hide">
-					<div class="container">
-						<ul class="responsive-table"></ul>
-					</div>
-				</section>
-
-				<section id="shop" class="page-menu hide">
-					<div id="shop-container">
-						<div id="item">
-							<div id="image"></div>
-							<!-- <div id="margin"></div> -->
-							<div id="description">
-								<h1></h1>
-								<p></p>
-								<h2></h2>
-							</div>
-						</div>
-						<div id="panel">
-							<div id="bonus" class="panel-items">
-								<h1>Bonus</h1>
-							</div>
-							<!-- <div id="emot"><h1>Emoticone</h1></div> -->
-							<div id="icon" class="panel-items">
-								<h1>Icone</h1>
-							</div>
-							<div id="skin" class="panel-items">
-								<h1>Skin</h1>
-							</div>
-							<div id="gold" class="panel-items">
-								<h1>Or</h1>
-							</div>
-						</div>
-					</div>
-					<div id="footer">
-						<button id="purchase">Acheter</button>
-					</div>
-				</section>
-			</div>
-
-			<section id="game" class="w-100 h-100 pos-rel hide">
-				<img id="fond" class="img-fit pos-abs z-index--1"
-					src="https://ik.imagekit.io/iq52ivedsj/assets/fond_On7kzCaht.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662987059086"
-					alt="">
-				<img id="nappe" class="img-fit pos-abs z-index--1"
-					src="https://ik.imagekit.io/iq52ivedsj/assets/nappe_dxy4e_8vX.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986991309"
-					alt="">
-				<img id="cadre" class="img-fit pos-abs z-index--1"
-					src="https://ik.imagekit.io/iq52ivedsj/assets/cadre_loHnyB1zn.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986959680"
-					alt="">
-
-				<div id="bet" class="w-100 h-100 h-mx-100 dark-bg pos-abs z-index-1">
-					<div id="bet-form" class="w-100 h-100 f-column-center">
-						<div id="lore-bet" class="">
-							<img class="img-res"
-								src="https://ik.imagekit.io/mbo2hq52r/assets/coffre_UVq0oNMjyM.png?ik-sdk-version=javascript-1.4.3&updatedAt=1664289319055"
-								alt="">
-						</div>
-
-						<form action="#" class="w-100 f-column-center color-white pos-rel">
-							<label for="bet-value">
-								Mise des points
-							</label>
-
-							<input class="color-white txt-center dark-bg" type="number" name="bet-value" value="0">
-
-							<p>
-								Double la mise en cas de victoire<br />
-								Perte des points en cas de défaite
-							</p>
-
-							<div></div>
-						</form>
-
-						<div id="validate-bet">
-							<button class="btn btn-transparent" type="button">
-								<img class="img-res"
-									src="https://ik.imagekit.io/iq52ivedsj/assets/pieces_jo4ovO8J0.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986935971"
-									alt="">
-							</button>
-						</div>
-					</div>
+				<div class="hide">
+					<img src="https://ik.imagekit.io/iq52ivedsj/assets/dices/Dice1.png?ik-sdk-version=javascript-1.4.3" alt="">
+					<img src="https://ik.imagekit.io/iq52ivedsj/assets/dices/Dice2.png?ik-sdk-version=javascript-1.4.3" alt="">
+					<img src="https://ik.imagekit.io/iq52ivedsj/assets/dices/Dice3.png?ik-sdk-version=javascript-1.4.3" alt="">
+					<img src="https://ik.imagekit.io/iq52ivedsj/assets/dices/Dice4.png?ik-sdk-version=javascript-1.4.3" alt="">
+					<img src="https://ik.imagekit.io/iq52ivedsj/assets/dices/Dice5.png?ik-sdk-version=javascript-1.4.3" alt="">
+					<img src="https://ik.imagekit.io/iq52ivedsj/assets/dices/Dice6.png?ik-sdk-version=javascript-1.4.3" alt="">
+					<img src="./assets/animationsEffect/explosion.png" alt="">
 				</div>
 
-				<button id="btn-rules" class="btn btn-transparent pos-abs">
-					<img class="img-res"
-						src="https://ik.imagekit.io/mbo2hq52r/assets/rules-btn_lTjyz6OqX.png?ik-sdk-version=javascript-1.4.3&updatedAt=1664205133511"
-						alt="" />
-				</button>
-
-				<button id="inventory-btn" class="btn btn-transparent pos-abs">
-					<img class="img-res"
-						src="https://ik.imagekit.io/mbo2hq52r/assets/coffre_UVq0oNMjyM.png?ik-sdk-version=javascript-1.4.3&updatedAt=1664289319055"
-						alt="">
-				</button>
-
-				<button id="quitGame" class="btn btn-transparent pos-abs">
-					<img class="img-res"
-						src="https://ik.imagekit.io/iq52ivedsj/assets/quitBtn_X1x10G28x.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986933210"
-						alt="">
-				</button>
-
-				<div id="rule" class="h-100 w-100 pos-abs z-index-1 hide">
-					<div id="rule-container" class="w-100 h-100 pos-abs f-column-center">
-						<div class="h-mx-100 f-column-center">
-							<div class="h-mx-100 pos-rel">
-								<img id="rulesImg" class="img-res"
-									src="https://ik.imagekit.io/mbo2hq52r/assets/rules_NLqLrnKmS.png?ik-sdk-version=javascript-1.4.3&updatedAt=1664990362873"
-									alt="" />
-								<button id="returnToTheGame" class="btn btn-transparent pos-abs">
-									<img class="img-res"
-										src="https://ik.imagekit.io/iq52ivedsj/assets/returnToTheGame_vd6nEsgBE.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986935888"
-										alt="" />
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div id="inventory" class="h-100 w-100 pos-abs dark-bg z-index-1 hide">
-					<div id="inventory-container" class="w-100 h-100 pos-abs f-column-center z-index-1">
-						<div id="inventory-menu" class="pos-rel color-white h-100">
-							<div id="inventory-items" class="f-column">
-								<h1>BONUS</h1>
-								<p id="inventory-msg" class="w-100 txt-center"></p>
-								<ul class="f-row-center f-wrap"></ul>
-							</div>
-							<div id="inventory-close" class="pos-abs top-0 rigth-0">
-								<img class="img-res"
-									src="https://ik.imagekit.io/iq52ivedsj/assets/quitBtn_X1x10G28x.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986933210"
-									alt="">
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div id="end-menu" class="h-100 w-100 pos-abs dark-bg z-index-1 hide">
-					<div class="w-100 h-100 f-column-center">
-						<div id="parchemin" class="pos-rel h-mx-100">
-							<img id="scoreImg" class="img-res"
-								src="https://ik.imagekit.io/iq52ivedsj/assets/score_tfEPzX4ZR.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662987039605"
-								alt="">
-							<p id="scoreMenu" class="pos-abs txt-center">0 - 0</p>
-							<div id="end-menu-quit" class="pos-abs">
-								<img id="quitBtn" class="img-res"
-									src="https://ik.imagekit.io/iq52ivedsj/assets/quitBtn_X1x10G28x.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986933210"
-									alt="">
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div id="player-ui" class="f-row-center w-100 h-100">
-
-					<div id="ui-haut">
-						<div class="pos-rel f-column-center">
-							<img class="img-res"
-								src="https://ik.imagekit.io/iq52ivedsj/assets/rollhaut_i40Hx7Lzp.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986947340"
-								alt="">
-							<div class="pos-abs w-35">
-								<img id="potPlayer2" class="choice-dice img-res"
-									src="https://ik.imagekit.io/iq52ivedsj/assets/dices/choseDice_ftS4YvZbV.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986918825"
-									alt="">
-							</div>
-						</div>
-
-						<div id="roll-haut" class="f-row-center">
-							<p id="totalScore2" class="total-score-left color-white">0</p>
-							<p id="namePlayer2" class="pseudo-left color-white">player2</p>
-						</div>
-					</div>
-
-					<div id="grids" class="f-column-center w-100">
-
-						<div id="grille2" class="f-column-center f-grow-1 w-100 h-50">
-							<div class="f-row-center player-grid h-100">
-								<div class="w-30 h-100">
-									<div id="player2-col1" class="f-column-center h-100">
-										<div class="case-container">
-											<div id="player2-col1-case-3" class="case f-column-center">
-												<img class="" src="#" alt="" data-value="null" data-case="2">
-											</div>
-
-											<div id="player2-col1-case-2" class="case f-column-center">
-												<img class="" src="#" alt="" data-value="null" data-case="1">
-											</div>
-
-											<div id="player2-col1-case-1" class="case f-column-center">
-												<img class="" src="#" alt="" data-value="null" data-case="0">
-											</div>
-										</div>
-
-										<div id="totalScore2Column1" class="column-score f-column-center color-white">
-											<p></p>
-										</div>
-									</div>
-								</div>
-
-								<div class="w-30 h-100">
-									<div id="player2-col2" class="f-column-center h-100">
-										<div class="case-container">
-											<div id="player2-col2-case-3" class="case f-column-center">
-												<img class="" src="#" alt="" data-value="null" data-case="5">
-											</div>
-
-											<div id="player2-col2-case-2" class="case f-column-center">
-												<img class="" src="#" alt="" data-value="null" data-case="4">
-											</div>
-
-											<div id="player2-col2-case-1" class="case f-column-center">
-												<img class="" src="#" alt="" data-value="null" data-case="3">
-											</div>
-										</div>
-
-										<div id="totalScore2Column2" class="column-score f-column-center color-white">
-											<p></p>
-										</div>
-									</div>
-
-								</div>
-
-								<div class="w-30 h-100">
-									<div id="player2-col3" class="f-column-center h-100">
-										<div class="case-container">
-											<div id="player2-col3-case-3" class="case f-column-center">
-												<img class="" src="#" alt="" data-value="null" data-case="8">
-											</div>
-
-											<div id="player2-col3-case-2" class="case f-column-center">
-												<img class="" src="#" alt="" data-value="null" data-case="7">
-											</div>
-
-											<div id="player2-col3-case-1" class="case f-column-center">
-												<img class="" src="#" alt="" data-value="null" data-case="6">
-											</div>
-										</div>
-
-										<div id="totalScore2Column3" class="column-score f-column-center color-white">
-											<p></p>
-										</div>
-									</div>
-
-								</div>
-							</div>
-						</div>
-
-						<div id="grille1" class="f-column-center f-grow-1 w-100 h-50">
-							<div class="f-row-center player-grid h-100">
-								<div class="w-30 h-100">
-
-									<div id="player1-col1" class="f-column-center h-100">
-										<div id="totalScore1Column1" class="column-score f-column-center color-white">
-											<p></p>
-										</div>
-
-										<div class="case-container">
-											<div id="player1-col1-case-1" class="case f-column-center">
-												<img class="" src="#" alt="" data-value="null" data-case="0">
-											</div>
-
-											<div id="player1-col1-case-2" class="case f-column-center">
-												<img class="" src="#" alt="" data-value="null" data-case="1">
-											</div>
-
-											<div id="player1-col1-case-3" class="case f-column-center">
-												<img class="" src="#" alt="" data-value="null" data-case="2">
-											</div>
-										</div>
-									</div>
-
-								</div>
-
-								<div class="w-30 h-100">
-									<div id="player1-col2" class="f-column-center h-100">
-										<div id="totalScore1Column2" class="column-score f-column-center color-white">
-											<p></p>
-										</div>
-
-										<div class="case-container">
-											<div id="player1-col2-case-1" class="case f-column-center">
-												<img class="" src="#" alt="" data-value="null" data-case="3">
-											</div>
-
-											<div id="player1-col2-case-2" class="case f-column-center">
-												<img class="" src="#" alt="" data-value="null" data-case="4">
-											</div>
-
-											<div id="player1-col2-case-3" class="case f-column-center">
-												<img class="" src="#" alt="" data-value="null" data-case="5">
-											</div>
-										</div>
-
-									</div>
-
-								</div>
-
-								<div class="w-30 h-100">
-									<div id="player1-col3" class="f-column-center h-100">
-										<div id="totalScore1Column3" class="column-score f-column-center color-white">
-											<p></p>
-										</div>
-
-										<div class="case-container">
-											<div id="player1-col3-case-1" class="case f-column-center">
-												<img class="" src="#" alt="" data-value="null" data-case="6">
-											</div>
-
-											<div id="player1-col3-case-2" class="case f-column-center">
-												<img class="" src="#" alt="" data-value="null" data-case="7">
-											</div>
-
-											<div id="player1-col3-case-3" class="case f-column-center">
-												<img class="" src="#" alt="" data-value="null" data-case="8">
-											</div>
-										</div>
-									</div>
-
-								</div>
-							</div>
-
-						</div>
-					</div>
-
-					<div id="ui-bas">
-						<div id="roll-bas" class="f-row-center">
-							<p id="namePlayer1" class="pseudo-rigth color-white">player1</p>
-							<p id="totalScore1" class="total-score-rigth color-white">0</p>
-						</div>
-						<div class="pos-rel f-column-center">
-							<img class="img-res"
-								src="https://ik.imagekit.io/iq52ivedsj/assets/rollbas_IgcEs8UX-.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986946600"
-								alt="">
-							<div class="pos-abs w-35">
-								<img id="potPlayer1" class="choice-dice img-res"
-									src="https://ik.imagekit.io/iq52ivedsj/assets/dices/choseDice_ftS4YvZbV.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662986918825"
-									alt="">
-							</div>
-						</div>
-					</div>
-
-				</div>
-			</section>
-		</main>
-
-		<footer>
-			<audio id="beginSong" src="assets/soundsEffect/begin.mp3"></audio>
-			<audio id="boom" src="assets/soundsEffect/boom.mp3"></audio>
-			<audio id="SeaSound" src="assets/soundsEffect/SeaSound.mp3" autoplay="true"></audio>
-			<audio id="bgAudio" src="assets/soundsEffect/bgSound.mp3" autoplay="true"></audio>
-			<audio id="dropCoin" src="assets/soundsEffect/dropCoin.mp3"></audio>
-			<audio id="closeRulesBook" src="assets/soundsEffect/closeRulesBook.mp3"></audio>
-			<audio id="rulesBookSound" src="assets/soundsEffect/rulesBookSound.mp3"></audio>
-			<audio id="diceSound" src="assets/soundsEffect/diceDrop.mp3"></audio>
-			<audio id="aiSoundDice" src="assets/soundsEffect/diceDrop.mp3"></audio>
-
-			<div class="hide">
-				<img src="https://ik.imagekit.io/iq52ivedsj/assets/dices/Dice1.png?ik-sdk-version=javascript-1.4.3"
-					alt="">
-				<img src="https://ik.imagekit.io/iq52ivedsj/assets/dices/Dice2.png?ik-sdk-version=javascript-1.4.3"
-					alt="">
-				<img src="https://ik.imagekit.io/iq52ivedsj/assets/dices/Dice3.png?ik-sdk-version=javascript-1.4.3"
-					alt="">
-				<img src="https://ik.imagekit.io/iq52ivedsj/assets/dices/Dice4.png?ik-sdk-version=javascript-1.4.3"
-					alt="">
-				<img src="https://ik.imagekit.io/iq52ivedsj/assets/dices/Dice5.png?ik-sdk-version=javascript-1.4.3"
-					alt="">
-				<img src="https://ik.imagekit.io/iq52ivedsj/assets/dices/Dice6.png?ik-sdk-version=javascript-1.4.3"
-					alt="">
-				<img src="./assets/animationsEffect/explosion.png" alt="">
-			</div>
-
-			<script>
-				function toggleMobileMenu(menu) {
-					menu.classList.toggle('open-hamburger');
-					document.querySelector("nav").classList.toggle("open-nav")
-				}
-			</script>
-		</footer>
-	</div>
-</body>
+				<script>
+					function toggleMobileMenu(menu) {
+menu.classList.toggle('open-hamburger');
+document.querySelector("nav").classList.toggle("open-nav")
+}
+				</script>
+			</footer>
+		</div>
+	</body>
 
 </html>
